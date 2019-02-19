@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using YellowProject;
+using LeagueGenLib;
 
 namespace YellowTestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class TeamTests
     {
 
 
