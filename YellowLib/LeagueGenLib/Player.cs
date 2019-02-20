@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace LeagueGenLib
 {
-    class Player
+    public class Player
     {
-        public Player(String lName, String fName)
+        public Player(string lName, string fName)
         {
-            lastName = lName;
-            firstName = fName;
+            LastName = lName;
+            FirstName = fName;
         }
 
-        public string firstName;
-        public string lastName;
+        // possible team data member
+
+        public string FirstName { private set; get; }
+        public string LastName { private set; get; }
 
     }
 

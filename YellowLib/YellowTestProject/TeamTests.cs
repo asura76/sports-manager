@@ -8,13 +8,14 @@ namespace YellowTestProject
     [TestClass]
     public class TeamTests
     {
+        // need to add "Record" to this
         [TestMethod]
         public void setupTeam()
         {
             const string teamName = "myTeam";
             Team myTeam = new Team(teamName);
 
-            Assert.AreEqual(teamName, myTeam.teamName);
+            Assert.AreEqual(teamName, myTeam.TeamName);
         }
         [TestMethod]
         public void setUpPlayer()
@@ -23,8 +24,8 @@ namespace YellowTestProject
             const string firstName = "FIRST";
             Player myPlayer = new Player(lastName, firstName);
 
-            Assert.Equals(lastName, myPlayer.lastName);
-            Assert.Equals(firstName, myPlayer.firstName);
+            Assert.AreEqual(lastName, myPlayer.LastName);
+            Assert.AreEqual(firstName, myPlayer.FirstName);
         }
      
 

@@ -8,11 +8,12 @@ namespace LeagueGenLib
 {
     public class Team
     {
-        public Team(string name)
+        public Team(string teamName)
         {
-            teamName = name;
+            TeamName = teamName;
         }
-        public string teamName;
+        public string TeamName { private set; get; }
+
 
     }
 }
