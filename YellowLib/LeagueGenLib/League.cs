@@ -31,10 +31,12 @@ namespace LeagueGenLib
                 Teams.Remove(team);
             }
         }
+        public void ransonFunction() { }
         public string LeagueName { private set; get; }
 
         public int MaxTeams { private set; get; }
 
         public List<Team> Teams { set; get; }
+        
     }
 }
