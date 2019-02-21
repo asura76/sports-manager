@@ -12,6 +12,14 @@ namespace LeagueGenLib
         {
             TeamName = teamName;
         }
+
+        public bool willertzUseless()
+        {
+            //test
+            bool result = false;
+            return result;
+        }
+
         public string TeamName { private set; get; }
 
 
