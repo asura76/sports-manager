@@ -22,6 +22,6 @@ namespace LeagueGenLib
 
         public string TeamName { private set; get; }
 
-
+        public void useless() { }
     }
 }
