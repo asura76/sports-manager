@@ -17,7 +17,8 @@ namespace LeagueGenLib
             Schedule = new List<Game>();
         }
 
-       //possibly add error message...
+        // possibly add error message to tell user
+        // the team failed to add because the league is full
         public void addTeam(Team team)
         {
             if(Teams.Count < MaxTeams)

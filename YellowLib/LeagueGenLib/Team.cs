@@ -40,5 +40,7 @@ namespace LeagueGenLib
         public League MyLeague { private set; get; } // league my team is in
 
         public List<Player> Players { set; get; }
+
+        // going to need some sort of record data member as well
     }
 }

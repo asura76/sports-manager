@@ -11,17 +11,17 @@ namespace YellowTestProject
         [TestInitialize]
         public void initializeLeague()
         {
-            int NTeams = 10;
+            const int MAX_TEAMS = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, NTeams);
+            League myLeague = new League(leagueName, MAX_TEAMS);
         }
 
         [TestMethod]
         public void setUpLeague()
         {
-            int NTeams = 10;
+            const int MAX_TEAMS = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, NTeams);
+            League myLeague = new League(leagueName, MAX_TEAMS);
 
             Assert.AreEqual(leagueName, myLeague.LeagueName);
         }
@@ -30,9 +30,9 @@ namespace YellowTestProject
         // add a team to a lague
         public void addTeamToLeague()
         {
-            int maxTeams = 10;
+            const int MAX_TEAMS = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, maxTeams);
+            League myLeague = new League(leagueName, MAX_TEAMS);
 
             const string teamName = "myTeam";
             Team myTeam = new Team(teamName, myLeague);
@@ -43,13 +43,13 @@ namespace YellowTestProject
         }
 
         [TestMethod]
-        // add a bunch of teams to a league and make sure they
+        // add multiple teams to a league and make sure they
         // were all added successfully
         public void fillLeagueWithTeams()
         {
-            int maxTeams = 10;
+            const int MAX_TEAMS = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, maxTeams);
+            League myLeague = new League(leagueName, MAX_TEAMS);
 
             const string teamName1 = "team1";
             Team team1 = new Team(teamName1, myLeague);
@@ -86,9 +86,9 @@ namespace YellowTestProject
         // and make sure the league does not allow that team be added
         public void addTooManyTeams()
         {
-            int maxTeams = 7;
+            const int MAX_TEAMS = 7;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, maxTeams);
+            League myLeague = new League(leagueName, MAX_TEAMS);
 
             const string teamName1 = "team1";
             Team team1 = new Team(teamName1, myLeague);
@@ -116,7 +116,7 @@ namespace YellowTestProject
             myLeague.addTeam(team7);
             myLeague.addTeam(team8);
 
-            Assert.IsTrue(myLeague.Teams.Count <= maxTeams);
+            Assert.IsTrue(myLeague.Teams.Count <= MAX_TEAMS);
         }
 
         [TestMethod]

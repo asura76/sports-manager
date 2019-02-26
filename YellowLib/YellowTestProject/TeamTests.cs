@@ -8,9 +8,8 @@ namespace YellowTestProject
     [TestClass]
     public class TeamTests
     {
-        // need to add "Record" to this
         [TestMethod]
-        public void setupTeam()
+        public void setUpTeam()
         {
             const int MAX_TEAMS = 7;
             string leagueName = "My League";
@@ -21,6 +20,7 @@ namespace YellowTestProject
 
             Assert.AreEqual(teamName, myTeam.TeamName);
         }
+
         [TestMethod]
         public void setUpPlayer()
         {
