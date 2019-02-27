@@ -14,22 +14,21 @@ namespace LeagueGenLib
             MaxTeams = maxTeams;
             Teams = new List<Team>();
             AllPlayersInLeague = new List<Player>();
-            Schedule = new List<Game>();
         }
 
         // possibly add error message to tell user
         // the team failed to add because the league is full
         public void addTeam(Team team)
         {
-            if(Teams.Count < MaxTeams)
+            if (Teams.Count < MaxTeams)
             {
                 Teams.Add(team);
             }
-                  
+
         }
         public void removeTeam(Team teamToRemove)
         {
-            if(Teams.Contains(teamToRemove))
+            if (Teams.Contains(teamToRemove))
             {
                 Teams.Remove(teamToRemove);
             }
@@ -37,13 +36,29 @@ namespace LeagueGenLib
 
         public void addGameToSchedule(Game newGame)
         {
-            Schedule.Add(newGame);
+            //Schedule.Add(newGame);
         }
-        public void generateSchedule(int nGames)
-        {
-            //see how many teams we have
-            //2 for loop??
 
+        public void generateSchedule(int nWeeks)
+        {
+            int nTeams = Teams.Count;
+            int nGames = nTeams / 2;
+            Schedule = new Game[nWeeks][];
+            for (int i = 0; i < nWeeks; i++)
+            {
+                Schedule[i] = new Game[nGames];
+                int first = 0;
+                int last = nTeams-1;
+                for (int j = 0; j < nGames; j++)
+                {
+                    Game newGame = new Game(Teams[first], Teams[last]);
+                    first++;
+                    last--;
+                }
+
+
+            }
+            
         }
 
         public string LeagueName { private set; get; }
@@ -54,7 +69,8 @@ namespace LeagueGenLib
 
         public List<Player> AllPlayersInLeague { set; get; }
 
-        public List<Game> Schedule { set; get; }
+        public Game[][] Schedule { set; get; }
         
-    }
+    };
 }
+
