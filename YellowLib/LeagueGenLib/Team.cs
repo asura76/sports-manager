@@ -33,7 +33,12 @@ namespace LeagueGenLib
                 MyLeague.AllPlayersInLeague.Remove(playerToRemove);
             }
         }
-
+        public Boolean equals(Team otherTeam)
+        {
+            this.MyLeague.Equals(otherTeam.MyLeague);
+            return string.Equals(this.TeamName, otherTeam.TeamName) &&
+                string.Equals(MyLeague.LeagueName, otherTeam.MyLeague.LeagueName);
+        }
 
         public string TeamName { private set; get; }
 

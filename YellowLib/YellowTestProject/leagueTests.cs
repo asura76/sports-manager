@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
+using System.Collections.Generic;
 
 using LeagueGenLib;
 
@@ -189,18 +191,47 @@ namespace YellowTestProject
             string leagueName = "My League";
             League myLeague = new League(leagueName, MAX_TEAMS);
 
-            const string teamName1 = "team1";
-            Team team1 = new Team(teamName1, myLeague);
-            const string teamName2 = "team2";
-            Team team2 = new Team(teamName2, myLeague);
+            Team tmpTeam;
 
-            Game firstGame = new Game(team1, team2);
-            int nGames = 8;
+            String[] teamNames = new String[MAX_TEAMS];
 
-            generateSchedule(int nGames);
+            List<Team> teams = new List<Team>();
 
-            Assert.AreEqual(nGames, myLeague.Schedule.Count);
+            for (int i = 0; i < MAX_TEAMS; i++)
+            {
+                teamNames[i] = "team" + i;
+                tmpTeam = new Team(teamNames[i], myLeague);
+                teams.Add(tmpTeam);
+            }
+            //Game firstGame = new Game(team1, team2);
+            int nTeams = 8;
+            int nGames = nTeams / 2;
+            Game[,] mySchedule = myLeague.generateSchedule(nTeams, teams);
+            bool areEqual = false;
 
+            Game tmpGame;
+           //Sweep through the schedule to ensure there are no duplicate games.
+            for (int i =0; i < nGames; i++)
+            {
+                
+                for (int j = 0; j < nGames; j++)
+                {
+                    tmpGame = mySchedule[i, j];
+
+                    for (int k = 0; k < nGames; k++)
+                    {
+                        areEqual = tmpGame == mySchedule[k, j];
+                        //If the loop is not = to tmpGame's index...
+                        if (k != i && k != j)
+                        {                            
+                            Assert.IsFalse(areEqual);
+                        }
+                       
+                    }
+                   
+                }
+            }
+           
         }
     }
 }

@@ -83,5 +83,28 @@ namespace YellowTestProject
             Assert.AreEqual(2, myTeam.Players.Count);
 
         }
+        [TestMethod]
+        public void equalsTest()
+        {
+            const int MAX_TEAMS = 7;
+            string leagueName = "My League";
+            string yourLeagueStr = "Your League";
+            League myLeague = new League(leagueName, MAX_TEAMS);
+            League yourLeague = new League(yourLeagueStr, MAX_TEAMS);
+
+            const string teamName = "myTeam";
+            const string otherTeamName = "Your Team";
+            Team myTeam = new Team(teamName, myLeague);
+
+            Team wrongTeamName = new Team(otherTeamName, myLeague);
+            Team wrongLeague = new Team(teamName, yourLeague);
+            Team bothWrong = new Team(otherTeamName, yourLeague);
+
+            Assert.IsTrue(myTeam.equals(myTeam));
+            Assert.IsFalse(myTeam.equals(wrongTeamName));
+            Assert.IsFalse(myTeam.equals(wrongLeague));
+            Assert.IsFalse(myTeam.equals(bothWrong));
+
+        }
     }
 }
