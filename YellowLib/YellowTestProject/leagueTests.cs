@@ -203,35 +203,153 @@ namespace YellowTestProject
                 tmpTeam = new Team(teamNames[i], myLeague);
                 teams.Add(tmpTeam);
             }
-            //Game firstGame = new Game(team1, team2);
+            // Game firstGame = new Game(team1, team2);
             int nTeams = 8;
             int nGames = nTeams / 2;
             Game[,] mySchedule = myLeague.generateSchedule(nTeams, teams);
-            bool areEqual = false;
-
-            Game tmpGame;
-           //Sweep through the schedule to ensure there are no duplicate games.
-            for (int i =0; i < nGames; i++)
-            {
-                
-                for (int j = 0; j < nGames; j++)
-                {
-                    tmpGame = mySchedule[i, j];
-
-                    for (int k = 0; k < nGames; k++)
-                    {
-                        areEqual = tmpGame == mySchedule[k, j];
-                        //If the loop is not = to tmpGame's index...
-                        if (k != i && k != j)
-                        {                            
-                            Assert.IsFalse(areEqual);
-                        }
-                       
-                    }
-                   
-                }
-            }
            
+            // Spot check the first three weeks.
+            int game = 0;
+            int week = 0;
+            Assert.IsTrue(teams[0].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[7].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[1].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[6].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[2].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[5].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[3].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[4].equals(mySchedule[week, game].Team2));
+            week++;
+            game = 0;
+            // The results for week 1 should be (0,6), (7, 5), (1,4), (2,3) ...(Team1, Team2)
+            Assert.IsTrue(teams[0].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[6].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[7].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[5].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[1].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[4].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[2].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[3].equals(mySchedule[week, game].Team2));
+            week++;
+            game = 0;
+            // The results for week 2 should be (0,5), (6, 4), (7,3), (1,2) ...(Team1, Team2)
+            Assert.IsTrue(teams[0].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[5].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[6].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[4].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[7].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[3].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[1].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[2].equals(mySchedule[week, game].Team2));
+            week++;
+
+        }
+        [TestMethod]
+        public void moveItemAtIndexToFrontTest()
+        {
+            const int MAX_TEAMS = 7;
+            string leagueName = "My League";
+            League myLeague = new League(leagueName, MAX_TEAMS);
+
+            int nTeams = 4;
+            int nGames = nTeams / 2;
+            String[] teamName = new string[nTeams];
+
+            for (int i = 0; i < nTeams; i++)
+            {
+                teamName[i] = "team" + (i + 1);
+
+            }
+            Team team1 = new Team(teamName[0], myLeague);           
+            Team team2 = new Team(teamName[1], myLeague);          
+            Team team3 = new Team(teamName[2], myLeague);           
+            Team team4 = new Team(teamName[3], myLeague);
+            Team[] teams = new Team[4];
+
+            teams[0] = team1;
+            teams[1] = team2;
+            teams[2] = team3;
+            teams[3] = team4;
+
+            List<Team> theList = new List<Team>();
+
+            theList.Add(team1);
+            theList.Add(team2);
+            theList.Add(team3);
+            theList.Add(team4);
+                       
+            // The list is null, so nothing should change
+            List<Team> emptyList = new List<Team>();
+            myLeague.moveItemAtEndToFront(emptyList, nGames);
+            for (int i = 0 ; i < nTeams; i++)
+            {
+                Assert.IsTrue(teams[i].equals(theList[i]));
+            }
+            
+            myLeague.generateSchedule(2);
+            // This should move team 3 to the 1st position (0,3,2,4)
+            myLeague.moveItemAtEndToFront(theList, nGames);
+            Assert.IsTrue(teams[0].equals(theList[0]));
+            Assert.IsTrue(teams[2].equals(theList[1]));
+            Assert.IsTrue(teams[1].equals(theList[2]));
+            Assert.IsTrue(teams[3].equals(theList[3]));
+            // For a four team league, they should return to their original positions
+            myLeague.moveItemAtEndToFront(theList, nGames);
+            for (int i = 0; i < nTeams; i++)
+            {
+                Assert.IsTrue(teams[i].equals(theList[i]));
+            }
+        }
+        [TestMethod]
+        public void makeTeamsEvenTest()
+        {
+            const int MAX_TEAMS = 7;
+            string leagueName = "My League";
+            League myLeague = new League(leagueName, MAX_TEAMS);
+
+            int nTeams = 5;
+            int nGames = nTeams / 2;
+            String[] teamName = new string[nTeams];
+
+            for (int i = 0; i < nTeams; i++)
+            {
+                teamName[i] = "team" + (i + 1);
+
+            }
+
+            Team team1 = new Team(teamName[0], myLeague);
+            Team team2 = new Team(teamName[1], myLeague);
+            Team team3 = new Team(teamName[2], myLeague);
+            Team team4 = new Team(teamName[3], myLeague);
+            Team team5 = new Team(teamName[4], myLeague);
+            Team[] teams = new Team[5];
+
+            teams[0] = team1;
+            teams[1] = team2;
+            teams[2] = team3;
+            teams[3] = team4;
+            teams[4] = team5;
+
+            List<Team> theList = new List<Team>();
+
+            theList.Add(team1);
+            theList.Add(team2);
+            theList.Add(team3);
+            theList.Add(team4);
+            theList.Add(team5);
+
+            myLeague.makeTeamsEven(theList);
+
+            Assert.AreEqual("BYE", theList[5].TeamName);
         }
     }
 }

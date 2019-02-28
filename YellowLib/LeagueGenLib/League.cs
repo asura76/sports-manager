@@ -71,17 +71,22 @@ namespace LeagueGenLib
             }
 
         }
-        public void moveItemAtIndexToFront<Team>(List<Team> theList, int size)
+        public void moveItemAtEndToFront<Team>(List<Team> theList, int nGames)
         {
-            Team item = theList[size];
-            theList.RemoveAt(size);
-            theList.Insert(1, item);
+            const int INSERT_POSITION = 1;
+            if(theList != null && nGames >= INSERT_POSITION + 1 &&
+                theList.Count > nGames)
+            {
+                Team item = theList[nGames];
+                theList.RemoveAt(nGames);
+                theList.Insert(INSERT_POSITION , item);
+            } 
 
         }
         public Game[,] generateSchedule(int nWeeks, List<Team> teams)
         {
             int nTeams = teams.Count;
-            int nGames = (nWeeks / 2);
+            int nGames = nTeams / 2;
             // nWeeks - 1 as going to "weeks" will produce a dulicate of the first week (week 0).
             Game[,] Schedule = new Game[nWeeks - 1, nGames];
             // We need at least 4 teams to make the schedule work.
@@ -89,7 +94,8 @@ namespace LeagueGenLib
             {
                 // There has to be an even number of teams. Add a bye if not..
                 makeTeamsEven(teams);
-
+                // Recalculate in case there were an odd number of teams.
+                nGames = nTeams / 2;
                 int last = nTeams;
                 for (int i = 0; i < nWeeks - 1; i++)
                 {
@@ -103,7 +109,7 @@ namespace LeagueGenLib
                         Console.WriteLine(Schedule[i, j].Team1.TeamName + " vs " + Schedule[i, j].Team2.TeamName);
                     }
 
-                    moveItemAtIndexToFront(teams, nTeams - 1);
+                    moveItemAtEndToFront(teams, nTeams - 1);
                 }
             }
 
