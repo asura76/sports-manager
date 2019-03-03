@@ -13,17 +13,17 @@ namespace YellowTestProject
         [TestInitialize]
         public void initializeLeague()
         {
-            const int MAX_TEAMS = 10;
+            const int NTeams = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName,NTeams);
         }
 
         [TestMethod]
         public void setUpLeague()
         {
-            const int MAX_TEAMS = 10;
+            const int NTeams = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName,NTeams);
 
             Assert.AreEqual(leagueName, myLeague.LeagueName);
         }
@@ -32,9 +32,9 @@ namespace YellowTestProject
         // add a team to a lague
         public void addTeamToLeague()
         {
-            const int MAX_TEAMS = 10;
+            const int NTeams = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName,NTeams);
 
             const string teamName = "myTeam";
             Team myTeam = new Team(teamName, myLeague);
@@ -49,9 +49,9 @@ namespace YellowTestProject
         // were all added successfully
         public void fillLeagueWithTeams()
         {
-            const int MAX_TEAMS = 10;
+            const int NTeams = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName, NTeams);
 
             const string teamName1 = "team1";
             Team team1 = new Team(teamName1, myLeague);
@@ -84,13 +84,13 @@ namespace YellowTestProject
         }
 
         [TestMethod]
-        // add one too many teams than the league's max teams
+        // add one too many teams than the league's NTeams teams
         // and make sure the league does not allow that team be added
         public void addTooManyTeams()
         {
-            const int MAX_TEAMS = 7;
+            const int NTeams = 7;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName, NTeams);
 
             const string teamName1 = "team1";
             Team team1 = new Team(teamName1, myLeague);
@@ -118,16 +118,16 @@ namespace YellowTestProject
             myLeague.addTeam(team7);
             myLeague.addTeam(team8);
 
-            Assert.IsTrue(myLeague.Teams.Count <= MAX_TEAMS);
+            Assert.IsTrue(myLeague.Teams.Count <= NTeams);
         }
 
         [TestMethod]
         // test to remove teams from league
         public void removeTeams()
         {
-            const int MAX_TEAMS = 7;
+            const int NTeams = 7;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName, NTeams);
 
             const string teamName1 = "team1";
             Team team1 = new Team(teamName1, myLeague);
@@ -170,9 +170,9 @@ namespace YellowTestProject
         [TestMethod]
         public void generateAGame()
         {
-            const int MAX_TEAMS = 7;
+            const int NTeams = 7;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName, NTeams);
 
             const string teamName1 = "team1";
             Team team1 = new Team(teamName1, myLeague);
@@ -187,26 +187,26 @@ namespace YellowTestProject
         [TestMethod]
         public void generateASchedule()
         {
-            const int MAX_TEAMS = 8;
+            const int NTeams = 8;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName, NTeams);
 
             Team tmpTeam;
 
-            String[] teamNames = new String[MAX_TEAMS];
+            String[] teamNames = new String[NTeams];
 
             List<Team> teams = new List<Team>();
 
-            for (int i = 0; i < MAX_TEAMS; i++)
+            for (int i = 0; i < NTeams; i++)
             {
                 teamNames[i] = "team" + i;
                 tmpTeam = new Team(teamNames[i], myLeague);
                 teams.Add(tmpTeam);
             }
             // Game firstGame = new Game(team1, team2);
-            int nTeams = 8;
-            int nGames = nTeams / 2;
-            Game[,] mySchedule = myLeague.generateSchedule(nTeams, teams);
+          
+            //int nGames = NTeams / 2;
+            Game[,] mySchedule = myLeague.generateSchedule(NTeams, teams);
            
             // Spot check the first three weeks.
             int game = 0;
@@ -256,15 +256,14 @@ namespace YellowTestProject
         [TestMethod]
         public void moveItemAtIndexToFrontTest()
         {
-            const int MAX_TEAMS = 7;
+            const int NTeams = 4;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName,NTeams);
 
-            int nTeams = 4;
-            int nGames = nTeams / 2;
-            String[] teamName = new string[nTeams];
+            int nGames = NTeams / 2;
+            String[] teamName = new string[NTeams];
 
-            for (int i = 0; i < nTeams; i++)
+            for (int i = 0; i < NTeams; i++)
             {
                 teamName[i] = "team" + (i + 1);
 
@@ -290,7 +289,7 @@ namespace YellowTestProject
             // The list is null, so nothing should change
             List<Team> emptyList = new List<Team>();
             myLeague.moveItemAtEndToFront(emptyList, nGames);
-            for (int i = 0 ; i < nTeams; i++)
+            for (int i = 0 ; i < NTeams; i++)
             {
                 Assert.IsTrue(teams[i].equals(theList[i]));
             }
@@ -304,7 +303,7 @@ namespace YellowTestProject
             Assert.IsTrue(teams[3].equals(theList[3]));
             // For a four team league, they should return to their original positions
             myLeague.moveItemAtEndToFront(theList, nGames);
-            for (int i = 0; i < nTeams; i++)
+            for (int i = 0; i < NTeams; i++)
             {
                 Assert.IsTrue(teams[i].equals(theList[i]));
             }
@@ -312,15 +311,14 @@ namespace YellowTestProject
         [TestMethod]
         public void makeTeamsEvenTest()
         {
-            const int MAX_TEAMS = 7;
+            const int NTeams = 7;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName,NTeams);
 
-            int nTeams = 5;
-            int nGames = nTeams / 2;
-            String[] teamName = new string[nTeams];
+            //int nGames = NTeams / 2;
+            String[] teamName = new string[NTeams];
 
-            for (int i = 0; i < nTeams; i++)
+            for (int i = 0; i < NTeams; i++)
             {
                 teamName[i] = "team" + (i + 1);
 
