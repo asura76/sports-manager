@@ -40,27 +40,7 @@ namespace LeagueGenLib
             //Schedule.Add(newGame);
         }
 
-        public void generateSchedule(int nWeeks)
-        {
-            int nTeams = Teams.Count;
-            int nGames = nTeams / 2;
-            Schedule = new Game[nWeeks][];
-            for (int i = 0; i < nWeeks; i++)
-            {
-                Schedule[i] = new Game[nGames];
-                int first = 0;
-                int last = nTeams-1;
-                for (int j = 0; j < nGames; j++)
-                {
-                    Game newGame = new Game(Teams[first], Teams[last]);
-                    first++;
-                    last--;
-                }
 
-
-            }
-            
-        }
         public void makeTeamsEven(List<Team> theTeams)
         {
             if (theTeams.Count % 2 != 0)

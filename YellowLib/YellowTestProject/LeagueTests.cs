@@ -182,7 +182,6 @@ namespace YellowTestProject
             Game firstGame = new Game(team1, team2);
             myLeague.addGameToSchedule(firstGame);
 
-
         }
 
         [TestMethod]
