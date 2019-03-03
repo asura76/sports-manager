@@ -9,10 +9,10 @@ namespace LeagueGenLib
     public class League
     {
         const int MIN_TEAMS_FOR_SCHEDULING = 4;
-        public League(string leagueName, int maxTeams = 0)
+        public League(string leagueName, int maxTeams)
         {
             LeagueName = leagueName;
-            MaxTeams = maxTeams;
+            NTeams = maxTeams;
             Teams = new List<Team>();
             AllPlayersInLeague = new List<Player>();
         }
@@ -21,7 +21,7 @@ namespace LeagueGenLib
         // the team failed to add because the league is full
         public void addTeam(Team team)
         {
-            if (Teams.Count < MaxTeams)
+            if (Teams.Count < NTeams)
             {
                 Teams.Add(team);
             }
@@ -118,7 +118,7 @@ namespace LeagueGenLib
         }
         public string LeagueName { private set; get; }
 
-        public int MaxTeams { private set; get; }
+        public int NTeams { private set; get; }
 
         public List<Team> Teams { set; get; }
 
