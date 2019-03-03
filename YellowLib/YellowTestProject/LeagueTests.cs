@@ -294,7 +294,7 @@ namespace YellowTestProject
                 Assert.IsTrue(teams[i].equals(theList[i]));
             }
             
-            myLeague.generateSchedule(2);
+            myLeague.generateSchedule(2, emptyList);
             // This should move team 3 to the 1st position (0,3,2,4)
             myLeague.moveItemAtEndToFront(theList, nGames);
             Assert.IsTrue(teams[0].equals(theList[0]));
@@ -349,5 +349,7 @@ namespace YellowTestProject
 
             Assert.AreEqual("BYE", theList[5].TeamName);
         }
+
+        
     }
 }
