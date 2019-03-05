@@ -7,7 +7,7 @@ namespace MainTest
     public class UnitTest1
     {
         [TestMethod]
-        public void ValidTest()
+        public void getNumberOfTeamsTest()
         {
 
 
