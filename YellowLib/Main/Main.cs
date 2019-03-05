@@ -45,7 +45,7 @@ namespace Main
             int inputToInt = int.Parse(input);
             return inputToInt;
         }
-        
+
         // create a new league and add to Leagues list
         static void addLeague()
         {
@@ -63,25 +63,27 @@ namespace Main
         {
             League result = null;
 
-            Console.WriteLine("Current leagues : \n");
-            foreach (League league in Leagues)
+            if (Leagues.Count > 0)
             {
-                Console.Write(league.LeagueName);
-            }
-            string readLeague = Console.ReadLine();
-            int leagueCounter = 0;
-            do
-            {
-                ++leagueCounter;
-            }
-            while (Leagues[leagueCounter].LeagueName != readLeague ||
-            leagueCounter > Leagues.Count());
+                Console.WriteLine("Current leagues : \n");
+                foreach (League league in Leagues)
+                {
+                    Console.Write(league.LeagueName);
+                }
+                string readLeague = Console.ReadLine();
+                int leagueCounter = 0;
+                do
+                {
+                    ++leagueCounter;
+                }
+                while (Leagues[leagueCounter].LeagueName != readLeague ||
+                leagueCounter > Leagues.Count());
 
-            if(leagueCounter <= Leagues.Count)
-            {
-                result = Leagues[leagueCounter];
+                if (leagueCounter <= Leagues.Count)
+                {
+                    result = Leagues[leagueCounter];
+                }
             }
-
             return result;
         }
 
