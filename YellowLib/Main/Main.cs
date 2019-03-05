@@ -31,7 +31,9 @@ namespace Main
 
                 //inputToInt = Convert.ToInt32(input);
 
+
                 inputToInt = getInt();
+
                 executeSelection(inputToInt);
 
             } while (inputToInt != 7);
@@ -46,13 +48,38 @@ namespace Main
             return inputToInt;
         }
         
+        static int getNumberOfTeams()
+        {
+            String strTeams;
+            int nTeams = 0;
+            Boolean valid = false;
+
+            do
+            {
+                try
+                {
+                    strTeams = Console.ReadLine();
+                    nTeams = int.Parse(strTeams);
+                    valid = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Please enter an integer!");
+                }
+            } while (!valid || nTeams < 1);
+
+            return nTeams;
+        }
+
         // create a new league and add to Leagues list
         static void addLeague()
+          
         {
             Console.WriteLine("Enter league name: ");
             leagueName = Console.ReadLine();
             Console.WriteLine("Enter number of teams: ");
-            int nTeams = Console.Read();
+            int nTeams = getNumberOfTeams();
+           
             League newLeague = new League(leagueName, nTeams);
             Leagues.Add(newLeague);
         }
@@ -66,7 +93,7 @@ namespace Main
             Console.WriteLine("Current leagues : \n");
             foreach (League league in Leagues)
             {
-                Console.Write(league.LeagueName);
+                Console.Write(league.LeagueName + Environment.NewLine);
             }
             string readLeague = Console.ReadLine();
             int leagueCounter = 0;
