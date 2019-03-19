@@ -96,23 +96,28 @@ namespace Main
                 {
                     Console.Write(league.LeagueName + Environment.NewLine);
                 }
+                Console.WriteLine("Select a league from the above list");
                 string readLeague = Console.ReadLine();
                 int leagueCounter = 0;
-                //do
-                //{
-                //    ++leagueCounter;
-                //}
-                while (Leagues[leagueCounter].LeagueName != readLeague ||
-                leagueCounter > Leagues.Count())
+              
+                while (leagueCounter < Leagues.Count() &&
+                    Leagues[leagueCounter].LeagueName != readLeague)
                 {
                     ++leagueCounter;
                 }
 
-                if (leagueCounter <= Leagues.Count)
+                if (leagueCounter < Leagues.Count)
                 {
                     result = Leagues[leagueCounter];
                 }
+                else
+                {
+                    Console.WriteLine("The league does not exist!");
+                }
             }
+            else { Console.WriteLine("There are no leagues!"); }
+
+            Console.WriteLine(Environment.NewLine);
             return result;
         }
 
@@ -144,6 +149,8 @@ namespace Main
             string readTeam;
             if (league != null && league.Teams.Count > 0)
             {
+                int counter = 0;
+                Console.WriteLine("Current teams : \n");
                 foreach (Team team in league.Teams)
                 {
                     Console.WriteLine(team.TeamName + "\n");
@@ -154,45 +161,16 @@ namespace Main
                 {
                     Console.WriteLine("Enter team name: ");
                     readTeam = Console.ReadLine();
-                    foreach(Team t in league.Teams)
+                    while (counter < league.Teams.Count && teamNameFound == false)
+                    //foreach(Team t in league.Teams)
                     {
-                        if (t.TeamName == readTeam)
+                        if (league.Teams[counter].TeamName == readTeam)
                         {
                             teamNameFound = true;
-                            league.removeTeam(t);
+                            league.removeTeam(league.Teams[counter]);
+
                         }
-                    }
-                    if (!teamNameFound)
-                    {
-                         Console.WriteLine("Team name not found");  
-                    }
-                } while (!teamNameFound);
-
-            }
-
-        }
-        static void getTeam(ref League league)
-        {
-            string readTeam;
-            if (league != null && league.Teams.Count > 0)
-            {
-                foreach (Team team in league.Teams)
-                {
-                    Console.WriteLine(team.TeamName + "\n");
-                }
-
-                bool teamNameFound = false;
-                do
-                {
-                    Console.WriteLine("Enter team name: ");
-                    readTeam = Console.ReadLine();
-                    for (int i = 0; i < league.Teams.Count; i++)
-                    {
-                        if (league.Teams[i].TeamName == readTeam)
-                        {
-                            teamNameFound = true;
-                            addPlayer(league.Teams[i]);
-                        }
+                        counter++;
                     }
                     if (!teamNameFound)
                     {
@@ -201,7 +179,45 @@ namespace Main
                 } while (!teamNameFound);
 
             }
+            else { Console.WriteLine("There are no teams to remove!"); }
 
+        }
+        static Team getTeam(ref League league)
+        {
+            string readTeam;
+            Team result = null;
+            int counter = 0;
+            if (league != null && league.Teams.Count > 0)
+            {
+                Console.WriteLine("Teams in league: ");
+                foreach (Team team in league.Teams)
+                {
+                    Console.WriteLine(team.TeamName + "\n");
+                }
+
+                bool teamNameFound = false;
+                do
+                {
+                    Console.WriteLine("Enter team name: ");
+                    readTeam = Console.ReadLine();
+                    while(counter < league.Teams.Count && teamNameFound == false)
+                    {
+                        if (league.Teams[counter].TeamName == readTeam)
+                        {
+                            teamNameFound = true;
+                            result = league.Teams[counter];
+                        }
+                    }                 
+                    if (!teamNameFound)
+                    {
+                        Console.WriteLine("Team name not found");
+                    }
+                } while (!teamNameFound);
+
+            }
+            else { Console.WriteLine("There are no teams in this league!"); }
+
+            return result;
         }
         // Add a new player to the team passed in
         static void addPlayer( Team team)
@@ -209,8 +225,8 @@ namespace Main
 
                 string fName;
                 string lName;
-                Console.WriteLine("New player: /n"
-                    + "First name: ");
+                Console.WriteLine("New player: "
+                  + Environment.NewLine +  "First name: ");
                 fName = Console.ReadLine();
                 Console.WriteLine("Last name: ");
                 lName = Console.ReadLine();
@@ -219,7 +235,50 @@ namespace Main
                 team.addPlayer(newPlayer);
             
         }
+        static void removePlayer(ref Team theTeam)
+        {
 
+            string readFirstName, readLastName;
+            if (theTeam != null && theTeam.Players.Count > 0)
+            {
+                int counter = 0;
+                Console.WriteLine("Current teams : \n");
+                foreach (Player player in theTeam.Players)
+                {
+                    Console.WriteLine(player.FirstName + ", " + player.LastName + "\n");
+                }
+
+                bool playerNameFound = false;
+                do
+                {
+                    Console.WriteLine("Enter first name: ");
+                    readFirstName = Console.ReadLine();
+                    while (counter < theTeam.Players.Count && playerNameFound == false)
+                    //foreach(Team t in league.Teams)
+                    {
+                        if (theTeam.Players[counter].FirstName == readFirstName)
+                        {
+                            Console.WriteLine("Enter last name: ");
+                            readLastName = Console.ReadLine();
+                            if (theTeam.Players[counter].LastName == readLastName)
+                            {
+                                playerNameFound = true;
+                                theTeam.removePlayer(theTeam.Players[counter]);
+                            }               
+                            
+                        }
+                        counter++;
+                    }
+                    if (!playerNameFound)
+                    {
+                        Console.WriteLine("Player name not found");
+                    }
+                } while (!playerNameFound);
+
+            }
+            else { Console.WriteLine("There are no players to remove!"); }
+
+        }
         static void executeSelection(int input)
         {
             switch (input)
@@ -229,34 +288,44 @@ namespace Main
                     break;
                 case 2:
                     League leagueToAddTo = getLeague();
-                    if (leagueToAddTo != null)
-                    {
+                    if (leagueToAddTo != null)      {
                         addTeam(leagueToAddTo);
-                    }
+                    }                 
                     break;
                 case 3:
                     League leagueToRemoveFrom = getLeague();
-                    removeTeam(ref leagueToRemoveFrom);
+                    if (leagueToRemoveFrom != null)
+                    {
+                        removeTeam(ref leagueToRemoveFrom);
+                    }
+                        
                     break;
                 case 4:
-                    League league = getLeague();
-                    if (league != null)
+                    League leagueToAddPlayer = getLeague();
+                    if (leagueToAddPlayer != null)
                     {
-                        getTeam(ref league);
-                        //if (teamToAddTo != null)
-                        //{
-                        //    addPlayer(ref teamToAddTo);
-                        //}
+                        Team theTeam = getTeam(ref leagueToAddPlayer);  
+                        if(theTeam != null)
+                        {
+                            addPlayer(theTeam);
+                        }
                     }
                     break;
                 case 5:
-
+                    League leagueToRemovePlayer = getLeague();
+                    if (leagueToRemovePlayer != null)
+                    {
+                        Team theTeam = getTeam(ref leagueToRemovePlayer);
+                        if (theTeam != null)
+                        {
+                            removePlayer(ref theTeam);
+                        }
+                    }
                     break;
                 case 6:
 
                     break;
                 case 7:
-
                     break;
                 default:
                     Console.WriteLine("Incorrect Input");
