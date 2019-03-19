@@ -91,12 +91,12 @@ namespace Main
             League result = null;
             if (Leagues.Count > 0)
             {
-                Console.WriteLine("Current leagues : \n");
+                Console.WriteLine("Current leagues: ");
                 foreach (League league in Leagues)
                 {
                     Console.Write(league.LeagueName + Environment.NewLine);
                 }
-                Console.WriteLine("Select a league from the above list");
+                Console.WriteLine("Select a league from the above list: ");
                 string readLeague = Console.ReadLine();
                 int leagueCounter = 0;
               
@@ -150,7 +150,7 @@ namespace Main
             if (league != null && league.Teams.Count > 0)
             {
                 int counter = 0;
-                Console.WriteLine("Current teams : \n");
+                Console.WriteLine("Current teams: ");
                 foreach (Team team in league.Teams)
                 {
                     Console.WriteLine(team.TeamName + "\n");
@@ -242,10 +242,10 @@ namespace Main
             if (theTeam != null && theTeam.Players.Count > 0)
             {
                 int counter = 0;
-                Console.WriteLine("Current teams : \n");
+                Console.WriteLine("Current players on this team: ");
                 foreach (Player player in theTeam.Players)
                 {
-                    Console.WriteLine(player.FirstName + ", " + player.LastName + "\n");
+                    Console.WriteLine(player.FirstName + " " + player.LastName + "\n");
                 }
 
                 bool playerNameFound = false;
