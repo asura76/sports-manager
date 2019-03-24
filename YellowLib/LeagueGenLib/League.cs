@@ -9,23 +9,17 @@ namespace LeagueGenLib
     public class League
     {
         const int MIN_TEAMS_FOR_SCHEDULING = 4;
-        public League(string leagueName, int maxTeams)
+        public League(string leagueName, int nPlayoffTeams)
         {
             LeagueName = leagueName;
-            NTeams = maxTeams;
+            NPlayoffTeams = nPlayoffTeams;
             Teams = new List<Team>();
             AllPlayersInLeague = new List<Player>();
         }
 
-        // possibly add error message to tell user
-        // the team failed to add because the league is full
         public void addTeam(Team team)
         {
-            if (Teams.Count < NTeams)
-            {
-                Teams.Add(team);
-            }
-
+            Teams.Add(team);
         }
         public void removeTeam(Team teamToRemove)
         {
@@ -67,8 +61,8 @@ namespace LeagueGenLib
         {
             int nTeams = teams.Count;
             int nGames = nTeams / 2;
-            // nWeeks - 1 as going to "weeks" will produce a dulicate of the first week (week 0).
-            Game[,] Schedule = new Game[nWeeks - 1, nGames];
+            // nWeeks - 1 as going to "weeks" will produce a duplicate of the first week (week 0).
+            Schedule = new Game[nWeeks - 1, nGames];
             // We need at least 4 teams to make the schedule work.
             if (nTeams >= MIN_TEAMS_FOR_SCHEDULING)
             {
@@ -93,18 +87,19 @@ namespace LeagueGenLib
                 }
             }
 
+           
             return Schedule;
 
         }
         public string LeagueName { private set; get; }
 
-        public int NTeams { private set; get; }
+        public int NPlayoffTeams { private set; get; }
 
         public List<Team> Teams { set; get; }
 
         public List<Player> AllPlayersInLeague { set; get; }
 
-        public Game[][] Schedule { set; get; }
+        public Game[,] Schedule { set; get; }
         
     };
 }

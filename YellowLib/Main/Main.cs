@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LeagueGenLib;
+
 namespace Main
 {
     class Program
@@ -18,14 +19,18 @@ namespace Main
             int inputToInt;
             do
             {
+                // a next step is sub options for a league/team
                 Console.WriteLine("Select option: \n" +
                 "1. Create a new league. \n" +
-                "2. Add team to league \n" +
-                "3. Remove team from league. \n" +
-                "4. Add player to team \n" +
-                "5. Remove player from team \n" +
-                "6. Generate schedule \n" +
-                "7. Quit");
+                "2. Display teams in league \n" +
+                "3. Add team to league \n" +
+                "4. Remove team from league. \n" +
+                "5. Display team record and roster \n" +
+                "6. Add player to team \n" +
+                "7. Remove player from team \n" +
+                "8. Generate league schedule \n" +
+                "9. Display league schedule \n" +
+                "10. Quit");
 
                 //input = Console.ReadLine();
 
@@ -48,11 +53,11 @@ namespace Main
             return inputToInt;
         }
         
-        static int getNumberOfTeams()
+        static int getNumberOfPlayoffTeams()
         {
             String strTeams;
             int nTeams = 0;
-            Boolean valid = false;
+            bool valid = false;
 
             do
             {
@@ -77,10 +82,17 @@ namespace Main
         {
             Console.WriteLine("Enter league name: ");
             leagueName = Console.ReadLine();
-            Console.WriteLine("Enter number of teams: ");
-            int nTeams = getNumberOfTeams();
+            Console.WriteLine("Enter number of playoff teams: ");
+            int nPlayoffTeams = getNumberOfPlayoffTeams();
            
-            League newLeague = new League(leagueName, nTeams);
+            League newLeague = new League(leagueName, nPlayoffTeams);
+            Leagues.Add(newLeague);
+        }
+
+        // create a new league and add to Leagues list - for test class
+        static void addLeagueForTest(string leagueName, int nPlayoffTeams)
+        {
+            League newLeague = new League(leagueName, nPlayoffTeams);
             Leagues.Add(newLeague);
         }
 
@@ -121,6 +133,53 @@ namespace Main
             return result;
         }
 
+        static void generateLeagueSchedule(League league)
+        {
+            Console.WriteLine("How many weeks of games?");
+            string strWeeks;
+            int nWeeks = 0;
+            bool valid = false;
+
+            do
+            {
+                try
+                {
+                    strWeeks = Console.ReadLine();
+                    nWeeks = int.Parse(strWeeks);
+                    valid = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Please enter an integer!");
+                }
+            } while (!valid || nWeeks < 1);
+
+            league.generateSchedule(nWeeks, league.Teams);
+        }
+
+        // this is going to print out the schedule of the league,
+        // but we have to figure out the best way to print the 2D array of games
+        static void displaySchedule(League league)
+        {
+            //if (league.Schedule != null)
+            //{
+            //    int i = 0;
+            //    foreach (Game week in league.Schedule)
+            //    {
+            //        Console.WriteLine("Week" + i);
+
+            //        foreach (Game game in week)
+            //        {
+            //            Console.WriteLine
+            //                (game.Team1.TeamName + " vs " + game.Team2.TeamName);
+            //        }
+
+            //        Console.WriteLine("\n");
+            //        i++;
+            //    }
+            //}
+        }
+
         // Add new team to the league passed in
         static void addTeam(League league)
         {
@@ -130,16 +189,6 @@ namespace Main
             Team teamToAdd = new Team(readTeam, league);
             league.addTeam(teamToAdd);
         }
-
-        // Remove team from the league passed in
-        //static void removeTeam(League league)
-        //{
-        //    Team teamToRemove = getTeam(ref league);
-        //    if (teamToRemove != null)
-        //    {
-        //        league.removeTeam(teamToRemove);
-        //    }
-        //}
 
         // Returns the team the user wants or null if that 
         // team does not exist in the league passed in 
@@ -182,6 +231,17 @@ namespace Main
             else { Console.WriteLine("There are no teams to remove!"); }
 
         }
+
+        static void displayTeamsInLeague(League league)
+        {
+            Console.WriteLine("Teams in league: ");
+            foreach (Team team in league.Teams)
+            {
+                Console.WriteLine(team.TeamName + "\n");
+            }
+        }
+
+        // returns the team that the user enters if it exists in league
         static Team getTeam(ref League league)
         {
             string readTeam;
@@ -189,11 +249,7 @@ namespace Main
             int counter = 0;
             if (league != null && league.Teams.Count > 0)
             {
-                Console.WriteLine("Teams in league: ");
-                foreach (Team team in league.Teams)
-                {
-                    Console.WriteLine(team.TeamName + "\n");
-                }
+                displayTeamsInLeague(league);
 
                 bool teamNameFound = false;
                 do
@@ -207,6 +263,7 @@ namespace Main
                             teamNameFound = true;
                             result = league.Teams[counter];
                         }
+                        counter++;
                     }                 
                     if (!teamNameFound)
                     {
@@ -219,10 +276,23 @@ namespace Main
 
             return result;
         }
-        // Add a new player to the team passed in
-        static void addPlayer( Team team)
-        {
 
+        // display a team's current record and roster
+        static void displayRecordAndRoster(Team team)
+        {
+            Console.WriteLine(team.TeamName + "Record: " +
+                team.Record[0] + "-" + team.Record[1]);
+
+            Console.WriteLine("Current roster: ");
+            foreach (Player player in team.Players)
+            {
+                Console.WriteLine(player.FirstName + " " + player.LastName + "\n");
+            }
+        }
+
+        // Add a new player to the team passed in
+        static void addPlayer(ref Team team)
+        {
                 string fName;
                 string lName;
                 Console.WriteLine("New player: "
@@ -232,12 +302,11 @@ namespace Main
                 lName = Console.ReadLine();
 
                 Player newPlayer = new Player(lName, fName);
-                team.addPlayer(newPlayer);
-            
+                team.addPlayer(newPlayer);    
         }
+
         static void removePlayer(ref Team theTeam)
         {
-
             string readFirstName, readLastName;
             if (theTeam != null && theTeam.Players.Count > 0)
             {
@@ -279,6 +348,7 @@ namespace Main
             else { Console.WriteLine("There are no players to remove!"); }
 
         }
+
         static void executeSelection(int input)
         {
             switch (input)
@@ -287,12 +357,19 @@ namespace Main
                     addLeague();
                     break;
                 case 2:
+                    League leagueToDisplay = getLeague();
+                    if(leagueToDisplay != null)
+                    {
+                        displayTeamsInLeague(leagueToDisplay);
+                    }
+                    break;
+                case 3:
                     League leagueToAddTo = getLeague();
                     if (leagueToAddTo != null)      {
                         addTeam(leagueToAddTo);
                     }                 
                     break;
-                case 3:
+                case 4:
                     League leagueToRemoveFrom = getLeague();
                     if (leagueToRemoveFrom != null)
                     {
@@ -300,18 +377,30 @@ namespace Main
                     }
                         
                     break;
-                case 4:
+                case 5:
+                    // display record and roster
+                    League leagueToDisplayTeam = getLeague();
+                    if (leagueToDisplayTeam != null)
+                    {
+                        Team theTeam = getTeam(ref leagueToDisplayTeam);
+                        if (theTeam != null)
+                        {
+                            displayRecordAndRoster(theTeam);
+                        }
+                    }
+                    break;
+                case 6:
                     League leagueToAddPlayer = getLeague();
                     if (leagueToAddPlayer != null)
                     {
                         Team theTeam = getTeam(ref leagueToAddPlayer);  
                         if(theTeam != null)
                         {
-                            addPlayer(theTeam);
+                            addPlayer(ref theTeam);
                         }
                     }
                     break;
-                case 5:
+                case 7:
                     League leagueToRemovePlayer = getLeague();
                     if (leagueToRemovePlayer != null)
                     {
@@ -322,10 +411,19 @@ namespace Main
                         }
                     }
                     break;
-                case 6:
-
+                case 8:
+                    League leagueToGenerateSched = getLeague();
+                    if (leagueToGenerateSched != null)
+                    {
+                        generateLeagueSchedule(leagueToGenerateSched);
+                    }
                     break;
-                case 7:
+                case 9:
+                    League leagueToDisplaySched = getLeague();
+                    if (leagueToDisplaySched != null)
+                    {
+                        displaySchedule(leagueToDisplaySched);
+                    }
                     break;
                 default:
                     Console.WriteLine("Incorrect Input");
@@ -336,7 +434,7 @@ namespace Main
 
         static void Main(string[] args)
         {
-            const int QUIT = 7;
+            int QUIT = 10;
             int selection;
             do
             {
