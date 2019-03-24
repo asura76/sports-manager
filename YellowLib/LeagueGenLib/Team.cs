@@ -8,12 +8,17 @@ namespace LeagueGenLib
 {
     public class Team
     {
+        public const int N_RECORD = 2;
+
         public Team(string teamName, League myLeague)
         {
             TeamName = teamName;
             MyLeague = myLeague;
 
             Players = new List<Player>();
+
+            // 2 integer array where first number is wins and second number is losses
+            Record = new int[N_RECORD] {0, 0};
         }
 
         public void addPlayer(Player newPlayer)
@@ -46,6 +51,7 @@ namespace LeagueGenLib
 
         public List<Player> Players { set; get; }
 
-        // going to need some sort of record data member as well
+        public int[] Record { private set; get; }
+
     }
 }
