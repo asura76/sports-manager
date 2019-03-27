@@ -212,7 +212,7 @@ namespace YellowTestProject
             int game = 0;
             int week = 0;
             Assert.IsTrue(teams[0].equals(mySchedule[week, game].Team1));
-            Assert.IsTrue(teams[7].equals(mySchedule[week, game].Team2));
+            Assert.IsTrue(teams[1].equals(mySchedule[week, game].Team2));
             game++;
             Assert.IsTrue(teams[1].equals(mySchedule[week, game].Team1));
             Assert.IsTrue(teams[6].equals(mySchedule[week, game].Team2));
@@ -351,5 +351,11 @@ namespace YellowTestProject
 
             Assert.AreEqual("BYE", theList[5].TeamName);
         }
+
+
     }
+
+
+
+
 }

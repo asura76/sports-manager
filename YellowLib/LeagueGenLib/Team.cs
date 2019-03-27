@@ -38,6 +38,27 @@ namespace LeagueGenLib
                 MyLeague.AllPlayersInLeague.Remove(playerToRemove);
             }
         }
+        public bool containsPlayer(string fName, string lName)
+        {
+            bool playerFound = false;
+
+            int counter = 0;
+            while (playerFound == false && counter < Players.Count)
+            {
+                if (Players[counter].FirstName == fName)
+                {
+                    if (Players[counter].LastName == lName)
+                    {
+                        playerFound = true;
+                    }
+                }
+                counter++;
+            }
+
+            return playerFound;
+        }
+
+
         public Boolean equals(Team otherTeam)
         {
             this.MyLeague.Equals(otherTeam.MyLeague);

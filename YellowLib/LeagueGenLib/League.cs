@@ -29,6 +29,23 @@ namespace LeagueGenLib
             }
         }
 
+        public bool containsTeam(string teamName)
+        {
+            bool teamFound = false;
+
+            int counter = 0;
+            while (teamFound == false && counter < Teams.Count)
+            {
+                if(Teams[counter].TeamName == teamName)
+                {
+                    teamFound = true;
+                }
+                counter++;
+            }
+
+            return teamFound;
+        }
+
         public void addGameToSchedule(Game newGame)
         {
             //Schedule.Add(newGame);
