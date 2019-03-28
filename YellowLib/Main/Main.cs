@@ -75,6 +75,7 @@ namespace Main
             return nTeams;
         }
 
+
         // create a new league and add to Leagues list
         public static void addLeague()
           
@@ -133,6 +134,29 @@ namespace Main
             return result;
         }
 
+        // Returns the league the user wants or null if that
+        // league does not exist in the Leagues list
+        public static League getLeagueForTest(string leagueName)
+        {
+            League result = null;
+            if (Leagues.Count > 0)
+            {
+                int leagueCounter = 0;
+                while (leagueCounter < Leagues.Count() &&
+                    Leagues[leagueCounter].LeagueName != leagueName)
+                {
+                    ++leagueCounter;
+                }
+
+                if (leagueCounter < Leagues.Count)
+                {
+                    result = Leagues[leagueCounter];
+                }
+            }
+
+            return result;
+        }
+
         public static void generateLeagueSchedule(League league)
         {
             Console.WriteLine("How many weeks of games?");
@@ -173,6 +197,14 @@ namespace Main
             Team teamToAdd = new Team(readTeam, league);
             league.addTeam(teamToAdd);
         }
+
+        // Add new team to the league passed in
+        public static void addTeamForTest(League league, string teamName)
+        {
+            Team teamToAdd = new Team(teamName, league);
+            league.addTeam(teamToAdd);
+        }
+
 
         // Returns the team the user wants or null if that 
         // team does not exist in the league passed in 
