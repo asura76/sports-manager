@@ -83,43 +83,43 @@ namespace YellowTestProject
             Assert.AreEqual(teamsCurrentlyInLeague, myLeague.Teams.Count);
         }
 
-        [TestMethod]
+        //[TestMethod]
         // add one too many teams than the league's max teams
         // and make sure the league does not allow that team be added
-        public void addTooManyTeams()
-        {
-            const int MAX_TEAMS = 7;
-            string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+        //public void addTooManyTeams()
+        //{
+        //    const int MAX_TEAMS = 7;
+        //    string leagueName = "My League";
+        //    League myLeague = new League(leagueName, MAX_TEAMS);
 
-            const string teamName1 = "team1";
-            Team team1 = new Team(teamName1, myLeague);
-            const string teamName2 = "team2";
-            Team team2 = new Team(teamName2, myLeague);
-            const string teamName3 = "team3";
-            Team team3 = new Team(teamName3, myLeague);
-            const string teamName4 = "team4";
-            Team team4 = new Team(teamName4, myLeague);
-            const string teamName5 = "team5";
-            Team team5 = new Team(teamName5, myLeague);
-            const string teamName6 = "team6";
-            Team team6 = new Team(teamName6, myLeague);
-            const string teamName7 = "team7";
-            Team team7 = new Team(teamName7, myLeague);
-            const string teamName8 = "team8";
-            Team team8 = new Team(teamName8, myLeague);
+        //    const string teamName1 = "team1";
+        //    Team team1 = new Team(teamName1, myLeague);
+        //    const string teamName2 = "team2";
+        //    Team team2 = new Team(teamName2, myLeague);
+        //    const string teamName3 = "team3";
+        //    Team team3 = new Team(teamName3, myLeague);
+        //    const string teamName4 = "team4";
+        //    Team team4 = new Team(teamName4, myLeague);
+        //    const string teamName5 = "team5";
+        //    Team team5 = new Team(teamName5, myLeague);
+        //    const string teamName6 = "team6";
+        //    Team team6 = new Team(teamName6, myLeague);
+        //    const string teamName7 = "team7";
+        //    Team team7 = new Team(teamName7, myLeague);
+        //    const string teamName8 = "team8";
+        //    Team team8 = new Team(teamName8, myLeague);
 
-            myLeague.addTeam(team1);
-            myLeague.addTeam(team2);
-            myLeague.addTeam(team3);
-            myLeague.addTeam(team4);
-            myLeague.addTeam(team5);
-            myLeague.addTeam(team6);
-            myLeague.addTeam(team7);
-            myLeague.addTeam(team8);
+        //    myLeague.addTeam(team1);
+        //    myLeague.addTeam(team2);
+        //    myLeague.addTeam(team3);
+        //    myLeague.addTeam(team4);
+        //    myLeague.addTeam(team5);
+        //    myLeague.addTeam(team6);
+        //    myLeague.addTeam(team7);
+        //    myLeague.addTeam(team8);
 
-            Assert.IsTrue(myLeague.Teams.Count <= MAX_TEAMS);
-        }
+        //    Assert.IsTrue(myLeague.Teams.Count <= MAX_TEAMS);
+        //}
 
         [TestMethod]
         // test to remove teams from league
@@ -206,7 +206,7 @@ namespace YellowTestProject
             // Game firstGame = new Game(team1, team2);
             int nTeams = 8;
             int nGames = nTeams / 2;
-            Game[,] mySchedule = myLeague.generateSchedule(nTeams, teams);
+            Game[,] mySchedule = myLeague.generateSchedule(nTeams - 1, teams);
            
             // Spot check the first three weeks.
             int game = 0;
@@ -351,5 +351,11 @@ namespace YellowTestProject
 
             Assert.AreEqual("BYE", theList[5].TeamName);
         }
+
+
     }
+
+
+
+
 }
