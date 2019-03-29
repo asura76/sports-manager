@@ -180,8 +180,6 @@ namespace YellowTestProject
             Team team2 = new Team(teamName2, myLeague);
 
             Game firstGame = new Game(team1, team2);
-            myLeague.addGameToSchedule(firstGame);
-
         }
 
         [TestMethod]
@@ -350,6 +348,26 @@ namespace YellowTestProject
             myLeague.makeTeamsEven(theList);
 
             Assert.AreEqual("BYE", theList[5].TeamName);
+        }
+
+
+        [TestMethod]
+        public void setScoresOfGame()
+        {
+            const int P_TEAMS = 4;
+            string leagueName = "My League";
+            League myLeague = new League(leagueName, P_TEAMS);
+
+            const string teamName1 = "team1";
+            Team team1 = new Team(teamName1, myLeague);
+            const string teamName2 = "team2";
+            Team team2 = new Team(teamName2, myLeague);
+
+            Game firstGame = new Game(team1, team2);
+            firstGame.setScore(teamName1, 40);
+            firstGame.setScore(teamName2, 50);
+
+            Assert.AreEqual(teamName2, firstGame.Winner);
         }
 
 

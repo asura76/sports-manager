@@ -12,7 +12,7 @@ namespace Main
 
         public static List<League> Leagues = new List<League>();
         static string leagueName;
-
+        static int numberWeeks =0;
         public Program()
         {
 
@@ -51,8 +51,8 @@ namespace Main
             int inputToInt = int.Parse(input);
             return inputToInt;
         }
-        
-        public  static int getNumberOfPlayoffTeams()
+
+        public static int getNumberOfPlayoffTeams()
         {
             String strTeams;
             int nTeams = 0;
@@ -78,14 +78,14 @@ namespace Main
 
         // create a new league and add to Leagues list
         public static void addLeague()
-          
+
         {
             Console.WriteLine("Enter league name: ");
             leagueName = Console.ReadLine();
             Console.WriteLine("Enter number of playoff teams: ");
-            
+
             int nPlayoffTeams = getNumberOfPlayoffTeams();
-           
+
             League newLeague = new League(leagueName, nPlayoffTeams);
             Leagues.Add(newLeague);
         }
@@ -94,7 +94,7 @@ namespace Main
         public static void addLeagueForTest(string leagueName, int nPlayoffTeams)
         {
             League newLeague = new League(leagueName, nPlayoffTeams);
-            Leagues.Add(newLeague);            
+            Leagues.Add(newLeague);
         }
 
         // Returns the league the user wants or null if that
@@ -112,7 +112,7 @@ namespace Main
                 Console.WriteLine("Select a league from the above list: ");
                 string readLeague = Console.ReadLine();
                 int leagueCounter = 0;
-              
+
                 while (leagueCounter < Leagues.Count() &&
                     Leagues[leagueCounter].LeagueName != readLeague)
                 {
@@ -180,6 +180,10 @@ namespace Main
 
             league.generateSchedule(nWeeks, league.Teams);
         }
+        public static void generateLeagueScheduleForTest(League league, int nWeeks)
+        { 
+            league.generateSchedule(nWeeks, league.Teams);
+        }
 
         // this is going to print out the schedule of the league,
         // but we have to figure out the best way to print the 2D array of games
@@ -210,7 +214,6 @@ namespace Main
         // team does not exist in the league passed in 
         public static void removeTeam(ref League league)
         {
-           
             string readTeam;
             if (league != null && league.Teams.Count > 0)
             {
@@ -248,6 +251,32 @@ namespace Main
 
         }
 
+        // Removes the team that's name was passed in or returns false
+        // if the team was not found
+        public static bool removeTeamForTest(ref League league, string teamName)
+        {
+            bool result = false;
+            if (league != null && league.Teams.Count > 0)
+            {
+                int counter = 0;
+
+                bool teamNameFound = false;
+
+                while (counter < league.Teams.Count && teamNameFound == false)
+                {
+                    if (league.Teams[counter].TeamName == teamName)
+                    {
+                        teamNameFound = true;
+                        result = true;
+                        league.removeTeam(league.Teams[counter]);
+                    }
+                    counter++;
+                }
+            }
+
+            return result;
+        }
+
         static void displayTeamsInLeague(League league)
         {
             Console.WriteLine("Teams in league: ");
@@ -272,7 +301,7 @@ namespace Main
                 {
                     Console.WriteLine("Enter team name: ");
                     readTeam = Console.ReadLine();
-                    while(counter < league.Teams.Count && teamNameFound == false)
+                    while (counter < league.Teams.Count && teamNameFound == false)
                     {
                         if (league.Teams[counter].TeamName == readTeam)
                         {
@@ -280,7 +309,7 @@ namespace Main
                             result = league.Teams[counter];
                         }
                         counter++;
-                    }                 
+                    }
                     if (!teamNameFound)
                     {
                         Console.WriteLine("Team name not found");
@@ -309,16 +338,16 @@ namespace Main
         // Add a new player to the team passed in
         static void addPlayer(ref Team team)
         {
-                string fName;
-                string lName;
-                Console.WriteLine("New player: "
-                  + Environment.NewLine +  "First name: ");
-                fName = Console.ReadLine();
-                Console.WriteLine("Last name: ");
-                lName = Console.ReadLine();
+            string fName;
+            string lName;
+            Console.WriteLine("New player: "
+              + Environment.NewLine + "First name: ");
+            fName = Console.ReadLine();
+            Console.WriteLine("Last name: ");
+            lName = Console.ReadLine();
 
-                Player newPlayer = new Player(lName, fName);
-                team.addPlayer(newPlayer);    
+            Player newPlayer = new Player(lName, fName);
+            team.addPlayer(newPlayer);
         }
 
         static void removePlayer(ref Team theTeam)
@@ -349,8 +378,8 @@ namespace Main
                             {
                                 playerNameFound = true;
                                 theTeam.removePlayer(theTeam.Players[counter]);
-                            }               
-                            
+                            }
+
                         }
                         counter++;
                     }
@@ -362,7 +391,26 @@ namespace Main
 
             }
             else { Console.WriteLine("There are no players to remove!"); }
+        }
 
+        public static int getWeek(League league)
+        {
+            int weeks = 0;
+            while(weeks <= 0 && weeks > numberWeeks)
+            {
+                Console.WriteLine("Enter the week to update the scores:");
+                {
+                    weeks = Console.Read();
+                }
+            }
+
+            return weeks;
+        }
+        public static void updateSchedule(League league)
+        {
+            int weeks = getWeek(league) - 1;
+            league.printScheduleByWeek(weeks);
+           
         }
 
         static void executeSelection(int input)
@@ -374,16 +422,17 @@ namespace Main
                     break;
                 case 2:
                     League leagueToDisplay = getLeague();
-                    if(leagueToDisplay != null)
+                    if (leagueToDisplay != null)
                     {
                         displayTeamsInLeague(leagueToDisplay);
                     }
                     break;
                 case 3:
                     League leagueToAddTo = getLeague();
-                    if (leagueToAddTo != null)      {
+                    if (leagueToAddTo != null)
+                    {
                         addTeam(leagueToAddTo);
-                    }                 
+                    }
                     break;
                 case 4:
                     League leagueToRemoveFrom = getLeague();
@@ -391,7 +440,7 @@ namespace Main
                     {
                         removeTeam(ref leagueToRemoveFrom);
                     }
-                        
+
                     break;
                 case 5:
                     // display record and roster
@@ -409,8 +458,8 @@ namespace Main
                     League leagueToAddPlayer = getLeague();
                     if (leagueToAddPlayer != null)
                     {
-                        Team theTeam = getTeam(ref leagueToAddPlayer);  
-                        if(theTeam != null)
+                        Team theTeam = getTeam(ref leagueToAddPlayer);
+                        if (theTeam != null)
                         {
                             addPlayer(ref theTeam);
                         }
@@ -439,6 +488,13 @@ namespace Main
                     if (leagueToDisplaySched != null)
                     {
                         displaySchedule(leagueToDisplaySched);
+                    }
+                    break;
+                case 10:
+                    League leagueToUpdateSched = getLeague();
+                    if(leagueToUpdateSched != null)
+                    {
+                        updateSchedule(leagueToUpdateSched);
                     }
                     break;
                 default:

@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Main;
-using FakeMainNameSpace;
 using LeagueGenLib;
 
 namespace MainTest
@@ -54,5 +53,75 @@ namespace MainTest
             Assert.IsTrue(retLeague.containsTeam(teamName));
         }
 
+        [TestMethod]
+        public void removeTeamTest()
+        {
+            string leagueName = "Test League";
+            int playoffTeams = 4;
+
+            Main.Program.addLeagueForTest(leagueName, playoffTeams);
+            League retLeague = Main.Program.getLeagueForTest(leagueName);
+
+            string teamName = "Team 1";
+            Main.Program.addTeamForTest(retLeague, teamName);
+            string teamName2 = "Team 2";
+            Main.Program.addTeamForTest(retLeague, teamName2);
+
+            bool remSuccess = Main.Program.removeTeamForTest(ref retLeague, teamName);
+
+            Assert.AreEqual(1, retLeague.Teams.Count);
+            Assert.IsTrue(remSuccess);
+            Assert.IsFalse(Main.Program.removeTeamForTest(ref retLeague, teamName));
+        }
+
+        // add/remove player
+
+        [TestMethod]
+        public void generateScheduleTest()
+        {
+            string leagueName = "Test League";
+            int playoffTeams = 4;
+
+            Main.Program.addLeagueForTest(leagueName, playoffTeams);
+            League retLeague = Main.Program.getLeagueForTest(leagueName);
+
+            string teamName = "Team 1";
+            Main.Program.addTeamForTest(retLeague, teamName);
+            string teamName2 = "Team 2";
+            Main.Program.addTeamForTest(retLeague, teamName2);
+            string teamName3 = "Team 3";
+            Main.Program.addTeamForTest(retLeague, teamName3);
+            string teamName4 = "Team 4";
+            Main.Program.addTeamForTest(retLeague, teamName4);
+
+            int nWeeks = 10;
+            Main.Program.generateLeagueScheduleForTest(retLeague, nWeeks);
+            Assert.AreEqual(nWeeks, retLeague.Schedule.GetLength(0));
+        }
+
+        [TestMethod]
+        public void setScoresTest()
+        {
+            string leagueName = "Test League";
+            int playoffTeams = 4;
+
+            Main.Program.addLeagueForTest(leagueName, playoffTeams);
+            League retLeague = Main.Program.getLeagueForTest(leagueName);
+
+            string teamName = "Team 1";
+            Main.Program.addTeamForTest(retLeague, teamName);
+            string teamName2 = "Team 2";
+            Main.Program.addTeamForTest(retLeague, teamName2);
+            string teamName3 = "Team 3";
+            Main.Program.addTeamForTest(retLeague, teamName3);
+            string teamName4 = "Team 4";
+            Main.Program.addTeamForTest(retLeague, teamName4);
+
+            int nWeeks = 10;
+            Main.Program.generateLeagueScheduleForTest(retLeague, nWeeks);
+
+
+
+        }
     }
 }

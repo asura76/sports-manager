@@ -36,7 +36,7 @@ namespace LeagueGenLib
             int counter = 0;
             while (teamFound == false && counter < Teams.Count)
             {
-                if(Teams[counter].TeamName == teamName)
+                if (Teams[counter].TeamName == teamName)
                 {
                     teamFound = true;
                 }
@@ -44,11 +44,6 @@ namespace LeagueGenLib
             }
 
             return teamFound;
-        }
-
-        public void addGameToSchedule(Game newGame)
-        {
-            //Schedule.Add(newGame);
         }
 
 
@@ -65,23 +60,38 @@ namespace LeagueGenLib
         public void moveItemAtEndToFront<Team>(List<Team> theList, int nGames)
         {
             const int INSERT_POSITION = 1;
-            if(theList != null && nGames >= INSERT_POSITION + 1 &&
+            if (theList != null && nGames >= INSERT_POSITION + 1 &&
                 theList.Count > nGames)
             {
                 Team item = theList[nGames];
                 theList.RemoveAt(nGames);
-                theList.Insert(INSERT_POSITION , item);
-            } 
+                theList.Insert(INSERT_POSITION, item);
+            }
 
+        }
+        public void printScheduleByWeek(int week)
+        {
+            if (Schedule.GetLength(0) > 0)
+            {
+
+                Console.WriteLine("Week " + (week + 1));
+                for (int j = 0; j < Schedule.GetLength(1); j++)
+                {
+                    Console.WriteLine(Schedule[week, j].Team1.TeamName + " vs " + Schedule[week, j].Team2.TeamName);
+                }
+
+                Console.WriteLine("\n");
+            }
+            else { Console.WriteLine("No schedule exists!"); }
         }
         public void printSchedule()
         {
-            if(Schedule.GetLength(0) > 0)
+            if (Schedule.GetLength(0) > 0)
             {
-                for(int i = 0; i < Schedule.GetLength(0); i++)
+                for (int i = 0; i < Schedule.GetLength(0); i++)
                 {
-                    Console.WriteLine("Week " +  (i + 1));
-                    for(int j = 0; j < Schedule.GetLength(1); j++)
+                    Console.WriteLine("Week " + (i + 1));
+                    for (int j = 0; j < Schedule.GetLength(1); j++)
                     {
                         Console.WriteLine(Schedule[i, j].Team1.TeamName + " vs " + Schedule[i, j].Team2.TeamName);
                     }
@@ -104,7 +114,7 @@ namespace LeagueGenLib
                 // Recalculate in case there were an odd number of teams.
                 nGames = nTeams / 2;
                 int last = nTeams;
-             
+
                 for (int i = 0; i < nWeeks; i++)
                 {
                     last = nTeams;
@@ -113,14 +123,14 @@ namespace LeagueGenLib
                     {
                         tmpGame = new Game(teams.ElementAt(j), teams.ElementAt(last - 1));
                         Schedule[i, j] = tmpGame;
-                        last--;                        
+                        last--;
                     }
 
                     moveItemAtEndToFront(teams, nTeams - 1);
                 }
             }
 
-           
+
             return Schedule;
 
         }
@@ -133,7 +143,7 @@ namespace LeagueGenLib
         public List<Player> AllPlayersInLeague { set; get; }
 
         public Game[,] Schedule { set; get; }
-        
+
     };
 }
 
