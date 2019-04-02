@@ -351,11 +351,5 @@ namespace YellowTestProject
 
             Assert.AreEqual("BYE", theList[5].TeamName);
         }
-
-
     }
-
-
-
-
 }
