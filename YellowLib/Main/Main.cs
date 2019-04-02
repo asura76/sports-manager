@@ -34,7 +34,8 @@ namespace Main
                 "7. Remove player from team \n" +
                 "8. Generate league schedule \n" +
                 "9. Display league schedule \n" +
-                "10. Quit");
+                "10. Update league schedule \n" +
+                "11. Quit");
 
                 inputToInt = getInt();
 
@@ -506,7 +507,7 @@ namespace Main
 
         static void Main(string[] args)
         {
-            int QUIT = 10;
+            int QUIT = 11;
             int selection;
             do
             {

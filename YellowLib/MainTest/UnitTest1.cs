@@ -9,17 +9,28 @@ namespace MainTest
     [TestClass]
     public class UnitTest1
     {
+        string leagueName;
+        int playoffTeams;
+
+        // clears all current leagues and generates a new "Test League"
+        [TestInitialize]
+        public void initilizeLeague()
+        {
+            Main.Program.Leagues.Clear();
+
+            leagueName = "Test League";
+            playoffTeams = 4;
+
+            Main.Program.addLeagueForTest(leagueName, playoffTeams);
+        }
+
+
         // this attempts to call the add league function that does not require
         // user prompted data, but Main does not seem to be able to be used
         // as a reference so we cannot call its functions from this test class
         [TestMethod]
         public void addLeagueTest()
         {
-            string leagueName = "Test League";
-            int playoffTeams = 4;
-
-            Main.Program.addLeagueForTest(leagueName, playoffTeams);
-
             Assert.AreEqual(leagueName, Main.Program.Leagues[Main.Program.Leagues.Count - 1].LeagueName);
             Assert.AreEqual(playoffTeams, Main.Program.Leagues[Main.Program.Leagues.Count - 1].NPlayoffTeams);
         }
@@ -31,20 +42,12 @@ namespace MainTest
             int playoffTeams = 4;
 
             League retLeague = Main.Program.getLeagueForTest(leagueName);
-            Assert.AreEqual(null, retLeague);
-
-            Main.Program.addLeagueForTest(leagueName, playoffTeams);
-            retLeague = Main.Program.getLeagueForTest(leagueName);
             Assert.AreEqual(leagueName, retLeague.LeagueName);
         }
 
         [TestMethod]
         public void addTeamTest()
         {
-            string leagueName = "Test League";
-            int playoffTeams = 4;
-
-            Main.Program.addLeagueForTest(leagueName, playoffTeams);
             League retLeague = Main.Program.getLeagueForTest(leagueName);
 
             string teamName = "Team 1";
@@ -56,10 +59,6 @@ namespace MainTest
         [TestMethod]
         public void removeTeamTest()
         {
-            string leagueName = "Test League";
-            int playoffTeams = 4;
-
-            Main.Program.addLeagueForTest(leagueName, playoffTeams);
             League retLeague = Main.Program.getLeagueForTest(leagueName);
 
             string teamName = "Team 1";
@@ -79,10 +78,6 @@ namespace MainTest
         [TestMethod]
         public void generateScheduleTest()
         {
-            string leagueName = "Test League";
-            int playoffTeams = 4;
-
-            Main.Program.addLeagueForTest(leagueName, playoffTeams);
             League retLeague = Main.Program.getLeagueForTest(leagueName);
 
             string teamName = "Team 1";
@@ -102,10 +97,6 @@ namespace MainTest
         [TestMethod]
         public void setScoresTest()
         {
-            string leagueName = "Test League";
-            int playoffTeams = 4;
-
-            Main.Program.addLeagueForTest(leagueName, playoffTeams);
             League retLeague = Main.Program.getLeagueForTest(leagueName);
 
             string teamName = "Team 1";
@@ -119,7 +110,6 @@ namespace MainTest
 
             int nWeeks = 10;
             Main.Program.generateLeagueScheduleForTest(retLeague, nWeeks);
-
 
 
         }
