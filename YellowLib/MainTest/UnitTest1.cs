@@ -113,5 +113,50 @@ namespace MainTest
 
 
         }
+        [TestMethod]
+        public void getIntValueTest()
+        {
+            int validLow = 1;
+            int invalidInt2 = -1;
+            string stringInput = "string";
+            bool result = false;
+
+            // Enter a string value to test the try catch statement in the main function.
+            try
+            {
+               result = Main.Program.getIntValueForTest(1, stringInput);
+                Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+                // do nothing
+            }
+            
+            // number less than the min value
+            result = Main.Program.getIntValueForTest(validLow, invalidInt2.ToString());
+            Assert.IsFalse(result);
+
+            // number = to the min value
+            result = Main.Program.getIntValueForTest(validLow, validLow.ToString());
+            Assert.IsTrue(result);
+
+            // number > min value
+            result = Main.Program.getIntValueForTest(validLow, (validLow + 1).ToString());
+            Assert.IsTrue(result);
+
+            string doubleTest = "3.14159";
+            
+            // Ensure a failure on a double...
+            try
+            {
+                result = Main.Program.getIntValueForTest(validLow, doubleTest);
+                Assert.Fail();
+            }
+            catch(Exception ex)
+            {
+                // do nothing
+            }
+         
+        }
     }
 }

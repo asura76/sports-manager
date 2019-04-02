@@ -204,13 +204,27 @@ namespace YellowTestProject
             // Game firstGame = new Game(team1, team2);
             int nTeams = 8;
             int nGames = nTeams / 2;
-            Game[,] mySchedule = myLeague.generateSchedule(nTeams - 1, teams);
+            Game[,] mySchedule = myLeague.generateSchedule(nTeams, teams);
            
             // Spot check the first three weeks.
             int game = 0;
             int week = 0;
             Assert.IsTrue(teams[0].equals(mySchedule[week, game].Team1));
             Assert.IsTrue(teams[1].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[2].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[7].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[3].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[6].equals(mySchedule[week, game].Team2));
+            game++;
+            Assert.IsTrue(teams[4].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[5].equals(mySchedule[week, game].Team2));
+            week++;
+            game = 0;
+            // The results for week 1 should be (0,6), (7, 5), (1,4), (2,3) ...(Team1, Team2)
+            Assert.IsTrue(teams[0].equals(mySchedule[week, game].Team1));
+            Assert.IsTrue(teams[7].equals(mySchedule[week, game].Team2));
             game++;
             Assert.IsTrue(teams[1].equals(mySchedule[week, game].Team1));
             Assert.IsTrue(teams[6].equals(mySchedule[week, game].Team2));
@@ -222,7 +236,7 @@ namespace YellowTestProject
             Assert.IsTrue(teams[4].equals(mySchedule[week, game].Team2));
             week++;
             game = 0;
-            // The results for week 1 should be (0,6), (7, 5), (1,4), (2,3) ...(Team1, Team2)
+            // The results for week 2 should be (0,5), (6, 4), (7,3), (1,2) ...(Team1, Team2)
             Assert.IsTrue(teams[0].equals(mySchedule[week, game].Team1));
             Assert.IsTrue(teams[6].equals(mySchedule[week, game].Team2));
             game++;
@@ -234,20 +248,6 @@ namespace YellowTestProject
             game++;
             Assert.IsTrue(teams[2].equals(mySchedule[week, game].Team1));
             Assert.IsTrue(teams[3].equals(mySchedule[week, game].Team2));
-            week++;
-            game = 0;
-            // The results for week 2 should be (0,5), (6, 4), (7,3), (1,2) ...(Team1, Team2)
-            Assert.IsTrue(teams[0].equals(mySchedule[week, game].Team1));
-            Assert.IsTrue(teams[5].equals(mySchedule[week, game].Team2));
-            game++;
-            Assert.IsTrue(teams[6].equals(mySchedule[week, game].Team1));
-            Assert.IsTrue(teams[4].equals(mySchedule[week, game].Team2));
-            game++;
-            Assert.IsTrue(teams[7].equals(mySchedule[week, game].Team1));
-            Assert.IsTrue(teams[3].equals(mySchedule[week, game].Team2));
-            game++;
-            Assert.IsTrue(teams[1].equals(mySchedule[week, game].Team1));
-            Assert.IsTrue(teams[2].equals(mySchedule[week, game].Team2));
             week++;
 
         }
@@ -370,10 +370,7 @@ namespace YellowTestProject
             Assert.AreEqual(teamName2, firstGame.Winner);
         }
 
-
+        
     }
-
-
-
-
+  
 }

@@ -157,27 +157,55 @@ namespace Main
 
             return result;
         }
-
-        public static void generateLeagueSchedule(League league)
+        public static bool getIntValueForTest(int minValue, string inputString)
         {
-            Console.WriteLine("How many weeks of games?");
             string strWeeks;
-            int nWeeks = 0;
+            int userInput = 0;
             bool valid = false;
 
+            try
+            {
+                strWeeks = inputString;
+                userInput = int.Parse(strWeeks);
+                if (userInput >= minValue) { valid = true; }
+            }
+            catch (Exception ex)
+            {
+                // Console.WriteLine("Please enter an integer!");
+            }
+
+
+            return valid;
+        }
+        public static int getIntValue(int minValue)
+        {
+            // This function gets an integer value from the user and 
+            // verifies that the input is greater than the min value
+            // and that it is a valid integer.
+            bool valid = false;
+            string strWeeks;
+            int userInput = 0;
             do
             {
                 try
                 {
                     strWeeks = Console.ReadLine();
-                    nWeeks = int.Parse(strWeeks);
+                    userInput = int.Parse(strWeeks);
                     valid = true;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Please enter an integer!");
                 }
-            } while (!valid || nWeeks < 1);
+            } while (!valid || userInput < minValue);
+
+            return userInput;
+        }
+      
+        public static void generateLeagueSchedule(League league)
+        {
+            Console.WriteLine("How many weeks of games?");
+            int nWeeks = getIntValue(1);
 
             league.generateSchedule(nWeeks, league.Teams);
         }
