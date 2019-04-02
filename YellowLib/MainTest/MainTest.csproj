@@ -56,6 +56,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LeagueGenLib\LeagueGenLib.csproj">
+      <Project>{5dbd9de9-a845-4bc0-93e2-9c3ef80353e2}</Project>
+      <Name>LeagueGenLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Main\Main.csproj">
       <Project>{0093e646-e127-48b1-8080-efa02ef21e64}</Project>
       <Name>Main</Name>
