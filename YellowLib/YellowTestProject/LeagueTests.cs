@@ -370,6 +370,11 @@ namespace YellowTestProject
             Assert.AreEqual(teamName2, firstGame.Winner);
         }
 
+        [TestMethod]
+        public void setRankings()
+        {
+
+        }
         
     }
   

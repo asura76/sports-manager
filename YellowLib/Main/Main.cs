@@ -34,8 +34,8 @@ namespace Main
                 "7. Remove player from team \n" +
                 "8. Generate league schedule \n" +
                 "9. Display league schedule \n" +
-                "10. Update league schedule \n" +
-                "11. Quit");
+                "10. Set scores in schedule \n" + 
+                "12. Quit");
 
                 inputToInt = getInt();
 
@@ -355,7 +355,7 @@ namespace Main
         static void displayRecordAndRoster(Team team)
         {
             Console.WriteLine(team.TeamName + "Record: " +
-                team.Record[0] + "-" + team.Record[1]);
+                team.Record[0] + "-" + team.Record[1] + "\n");
 
             Console.WriteLine("Current roster: ");
             foreach (Player player in team.Players)
@@ -442,6 +442,27 @@ namespace Main
            
         }
 
+        public static void setResults(ref League league)
+        {
+            Team FirstTeam, SecondTeam;
+
+            FirstTeam = getTeam(ref league);
+            SecondTeam = getTeam(ref league);
+
+            foreach(Game game in league.Schedule)
+            {
+                if(game.Team1 == FirstTeam &&
+                    game.Team2 == SecondTeam)
+                {
+                    Console.WriteLine("Enter score of team 1");
+                    game.setScore(FirstTeam.TeamName, int.Parse(Console.ReadLine()));
+                    Console.WriteLine("Enter score of team 2");
+                    game.setScore(SecondTeam.TeamName, int.Parse(Console.ReadLine()));
+                }
+            }
+            
+        }
+
         static void executeSelection(int input)
         {
             switch (input)
@@ -520,10 +541,10 @@ namespace Main
                     }
                     break;
                 case 10:
-                    League leagueToUpdateSched = getLeague();
-                    if(leagueToUpdateSched != null)
+                    League leagueToSetScore = getLeague();
+                    if (leagueToSetScore != null)
                     {
-                        updateSchedule(leagueToUpdateSched);
+                        setResults(ref leagueToSetScore);
                     }
                     break;
                 default:

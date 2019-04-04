@@ -74,5 +74,7 @@ namespace LeagueGenLib
 
         public int[] Record { private set; get; }
 
+        public int Ranking { private set; get; }
+
     }
 }

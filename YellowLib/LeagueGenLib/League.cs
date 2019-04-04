@@ -104,6 +104,7 @@ namespace LeagueGenLib
         {
             int nTeams = teams.Count;
             int nGames = nTeams / 2;
+            NWeeks = nWeeks;
             // nWeeks - 1 as going to "weeks" will produce a duplicate of the first week (week 0).
             Schedule = new Game[nWeeks, nGames];
             // We need at least 4 teams to make the schedule work.
@@ -134,6 +135,9 @@ namespace LeagueGenLib
             return Schedule;
 
         }
+
+        public int NWeeks { get; private set; }
+
         public string LeagueName { private set; get; }
 
         public int NPlayoffTeams { private set; get; }

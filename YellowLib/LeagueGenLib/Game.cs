@@ -43,10 +43,14 @@ namespace LeagueGenLib
             if (ScoreTeam1 > ScoreTeam2)
             {
                 Winner = Team1.TeamName;
+                Team1.Record[0]++;
+                Team2.Record[1]++;
             }
             else if (ScoreTeam2 > ScoreTeam1)
             {
                 Winner = Team2.TeamName;
+                Team1.Record[1]++;
+                Team2.Record[0]++;
             }
             else
             {
@@ -58,7 +62,7 @@ namespace LeagueGenLib
         public Team Team2 { set; get; }
 
         public string Winner { set; get; }
-        public int ScoreTeam1 { private set; get; }
-        public int ScoreTeam2 { private set; get; }
+        public int ScoreTeam1 { set; get; }
+        public int ScoreTeam2 { set; get; }
     }
 }
