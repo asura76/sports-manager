@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LeagueGenLib;
+using System.Xml;
+using System.IO;
 
 namespace Main
 {
@@ -35,6 +37,7 @@ namespace Main
                 "8. Generate league schedule \n" +
                 "9. Display league schedule \n" +
                 "10. Set scores in schedule \n" +
+                "11. test xml \n" +
                 "12. Quit");
 
                 inputToInt = getInt();
@@ -51,8 +54,76 @@ namespace Main
             string input = Console.ReadLine();
             int inputToInt = int.Parse(input);
             return inputToInt;
+         
         }
+        public void readXml(String fileName)
+        {
+            XmlReaderSettings settings = new XmlReaderSettings();
+            StreamReader sr = new StreamReader(fileName);
 
+            settings.DtdProcessing = DtdProcessing.Parse;
+            XmlReader reader = XmlReader.Create(sr);
+
+            while(reader.Read())
+            {
+                switch (reader.NodeType)
+                {
+                    case XmlNodeType.Element:
+                        League tmp = new League(reader.Name, 4);
+                        break;
+                    
+                }
+
+                   
+
+
+            }
+                
+        }
+        public static void writeXML()
+        {
+          
+            int counter = 0;
+            int playerCounter = 0;
+            int leagueCounter = 0;
+
+            String fileName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            using (FileStream fileStream = new FileStream(fileName + "\\test.xml", FileMode.Create))
+            using (StreamWriter sw = new StreamWriter(fileStream))
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(sw))
+            {
+                xmlWriter.Formatting = Formatting.Indented;
+                xmlWriter.Indentation = 4;
+                xmlWriter.WriteStartDocument();
+                xmlWriter.WriteStartElement("Leagues");
+                foreach (League leaguesNames in Leagues)
+                {
+                    xmlWriter.WriteElementString("LeagueName" + leagueCounter + 1, leaguesNames.LeagueName);
+                    xmlWriter.WriteElementString("NumberToMakePlayoffs" + leagueCounter + 1, leaguesNames.NPlayoffTeams.ToString());
+                    counter = 0;
+                    leagueCounter++;
+                    foreach (Team theTeam in leaguesNames.Teams)
+                    {
+                        xmlWriter.WriteStartElement("Teams");
+                        xmlWriter.WriteElementString("Team" + (counter + 1), theTeam.TeamName);
+                        counter++;
+                        playerCounter = 0;
+                        foreach(Player thePlayer in theTeam.Players)
+                        {
+                            xmlWriter.WriteStartElement("Players");
+                            xmlWriter.WriteElementString("Team" + (counter + 1) + "Player" + playerCounter + 1,
+                                thePlayer.LastName + "," + thePlayer.FirstName);
+                            playerCounter++;
+                        }
+                        xmlWriter.WriteEndElement();
+                    }
+                    xmlWriter.WriteEndElement();
+                }
+                xmlWriter.WriteEndElement();
+                xmlWriter.Close();
+            }
+
+        }
         public static int getNumberOfPlayoffTeams()
         {
             String strTeams;
@@ -230,7 +301,7 @@ namespace Main
             Team teamToAdd = new Team(readTeam, league);
             league.addTeam(teamToAdd);
         }
-
+       
         // Add new team to the league passed in
         public static void addTeamForTest(League league, string teamName)
         {
@@ -557,6 +628,9 @@ namespace Main
                     {
                         setResults(ref leagueToSetScore);
                     }
+                    break;
+                case 11:
+                    writeXML();
                     break;
                 default:
                     Console.WriteLine("Incorrect Input");
