@@ -74,10 +74,10 @@ namespace LeagueGenLib
             if (Schedule.GetLength(0) > 0)
             {
 
-                Console.WriteLine("Week " + (week + 1));
+                Console.WriteLine("Week " + (week + 1) + "\n Home: ");
                 for (int j = 0; j < Schedule.GetLength(1); j++)
                 {
-                    Console.WriteLine(Schedule[week, j].Team1.TeamName + " vs " + Schedule[week, j].Team2.TeamName);
+                    Console.WriteLine(Schedule[week, j].Home.TeamName + " vs Away: " + Schedule[week, j].Away.TeamName);
                 }
 
                 Console.WriteLine("\n");
@@ -93,7 +93,7 @@ namespace LeagueGenLib
                     Console.WriteLine("Week " + (i + 1));
                     for (int j = 0; j < Schedule.GetLength(1); j++)
                     {
-                        Console.WriteLine(Schedule[i, j].Team1.TeamName + " vs " + Schedule[i, j].Team2.TeamName);
+                        Console.WriteLine(Schedule[i, j].Home.TeamName + " vs " + Schedule[i, j].Away.TeamName);
                     }
                 }
                 Console.WriteLine("\n");

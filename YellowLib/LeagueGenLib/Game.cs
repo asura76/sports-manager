@@ -10,15 +10,15 @@ namespace LeagueGenLib
     {
         public Game(Team team1, Team team2)
         {
-            Team1 = team1;
-            Team2 = team2;
+            Home = team1;
+            Away = team2;
             ScoreTeam1 = -1;
             ScoreTeam2 = -1;
         }
 
         public void setScore(string teamName, int score)
         {
-            if (teamName == Team1.TeamName)
+            if (teamName == Home.TeamName)
             {
                 ScoreTeam1 = score;
                 // if team 2 score is set both are set and we can declare winner
@@ -27,7 +27,7 @@ namespace LeagueGenLib
                     declareWinner();
                 }
             }
-            else if (teamName == Team2.TeamName)
+            else if (teamName == Away.TeamName)
             {
                 ScoreTeam2 = score;
                 // if team 1 score is set both are set and we can declare winner
@@ -42,15 +42,15 @@ namespace LeagueGenLib
         {
             if (ScoreTeam1 > ScoreTeam2)
             {
-                Winner = Team1.TeamName;
-                Team1.Record[0]++;
-                Team2.Record[1]++;
+                Winner = Home.TeamName;
+                Home.Record[0]++;
+                Away.Record[1]++;
             }
             else if (ScoreTeam2 > ScoreTeam1)
             {
-                Winner = Team2.TeamName;
-                Team1.Record[1]++;
-                Team2.Record[0]++;
+                Winner = Away.TeamName;
+                Home.Record[1]++;
+                Away.Record[0]++;
             }
             else
             {
@@ -58,8 +58,8 @@ namespace LeagueGenLib
             }
         }
 
-        public Team Team1 { set; get; }
-        public Team Team2 { set; get; }
+        public Team Home { set; get; }
+        public Team Away { set; get; }
 
         public string Winner { set; get; }
         public int ScoreTeam1 { set; get; }

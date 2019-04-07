@@ -12,7 +12,7 @@ namespace Main
 
         public static List<League> Leagues = new List<League>();
         static string leagueName;
-        static int numberWeeks =0;
+        static int numberWeeks = 0;
         public Program()
         {
 
@@ -34,7 +34,7 @@ namespace Main
                 "7. Remove player from team \n" +
                 "8. Generate league schedule \n" +
                 "9. Display league schedule \n" +
-                "10. Set scores in schedule \n" + 
+                "10. Set scores in schedule \n" +
                 "12. Quit");
 
                 inputToInt = getInt();
@@ -201,7 +201,7 @@ namespace Main
 
             return userInput;
         }
-      
+
         public static void generateLeagueSchedule(League league)
         {
             Console.WriteLine("How many weeks of games?");
@@ -210,7 +210,7 @@ namespace Main
             league.generateSchedule(nWeeks, league.Teams);
         }
         public static void generateLeagueScheduleForTest(League league, int nWeeks)
-        { 
+        {
             league.generateSchedule(nWeeks, league.Teams);
         }
 
@@ -425,7 +425,7 @@ namespace Main
         public static int getWeek(League league)
         {
             int weeks = 0;
-            while(weeks <= 0 && weeks > numberWeeks)
+            while (weeks <= 0 && weeks > numberWeeks)
             {
                 Console.WriteLine("Enter the week to update the scores:");
                 {
@@ -439,28 +439,39 @@ namespace Main
         {
             int weeks = getWeek(league) - 1;
             league.printScheduleByWeek(weeks);
-           
+
         }
 
         public static void setResults(ref League league)
         {
             Team FirstTeam, SecondTeam;
+            bool GameFound = false;
 
+            Console.WriteLine("Enter Home and Away Teams \n"
+                + "Home: \n");
             FirstTeam = getTeam(ref league);
+            Console.WriteLine("Away: \n");
             SecondTeam = getTeam(ref league);
 
-            foreach(Game game in league.Schedule)
+            foreach (Game game in league.Schedule)
             {
-                if(game.Team1 == FirstTeam &&
-                    game.Team2 == SecondTeam)
+                if (game.Home == FirstTeam &&
+                    game.Away == SecondTeam)
                 {
+                    GameFound = true;
                     Console.WriteLine("Enter score of team 1");
                     game.setScore(FirstTeam.TeamName, int.Parse(Console.ReadLine()));
                     Console.WriteLine("Enter score of team 2");
                     game.setScore(SecondTeam.TeamName, int.Parse(Console.ReadLine()));
                 }
             }
-            
+
+            if (GameFound == false)
+            {
+                Console.WriteLine("There were no games between Home: " + FirstTeam.TeamName +
+                    " and Away: " + SecondTeam.TeamName + "\n");
+            }
+
         }
 
         static void executeSelection(int input)
