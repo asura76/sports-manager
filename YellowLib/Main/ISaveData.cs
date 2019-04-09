@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using LeagueGenLib;
 using Main;
 
-namespace Main
-{
+
     public interface ISaveData
     {
         void saveData();
 
     }
-}
+
