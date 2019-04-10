@@ -10,17 +10,15 @@ using Main;
 
 namespace Main
 {
-    class SaveXML : ISaveData
+    public class XMLDataIO : IDataIO
     {
         //public List<League> Leagues = new List<League>();
-        public void saveData()
+        public void saveData(string fileName)
         {
-            
-        
                 int leagueCounter = 0;
                
-               String fileName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            using (FileStream fileStream = new FileStream(fileName + "\\test.xml", FileMode.Create))
+               String directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            using (FileStream fileStream = new FileStream(directory + "\\" + fileName, FileMode.Create))
             using (StreamWriter sw = new StreamWriter(fileStream))
             using (XmlTextWriter xmlWriter = new XmlTextWriter(sw))
                 
@@ -39,7 +37,6 @@ namespace Main
                     writeTeams(xmlWriter, theLeagues);                    
                     settings.Indent = false;
                 }
-               //Writer.WriteEndElement();
                 xmlWriter.Close();
             }
 
@@ -76,6 +73,11 @@ namespace Main
                 xmlWriter.WriteEndElement();
             }
           
+        }
+
+        public void loadData(string fileName)
+        {
+
         }
     }
 }

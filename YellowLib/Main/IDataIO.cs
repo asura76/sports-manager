@@ -7,9 +7,10 @@ using LeagueGenLib;
 using Main;
 
 
-    public interface ISaveData
+    public interface IDataIO
     {
-        void saveData();
+        void saveData(string fileName);
 
+        void loadData(string fileName);
     }
 

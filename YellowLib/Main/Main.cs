@@ -15,7 +15,7 @@ namespace Main
         public static List<League> Leagues = new List<League>();
         static string leagueName;
         static int numberWeeks = 0;
-        public static ISaveData saveInterface = new SaveXML();
+        public static IDataIO saveInterface = new XMLDataIO();
 
         public Program()
         {
@@ -84,7 +84,7 @@ namespace Main
         }
         public static void save()
         {
-            saveInterface.saveData();
+            saveInterface.saveData("test.xml");
             
         }
         public static int getNumberOfPlayoffTeams()
@@ -409,6 +409,12 @@ namespace Main
             Console.WriteLine("Last name: ");
             lName = Console.ReadLine();
 
+            Player newPlayer = new Player(lName, fName);
+            team.addPlayer(newPlayer);
+        }
+
+        public static void addPlayerForTest(ref Team team, string fName, string lName)
+        {
             Player newPlayer = new Player(lName, fName);
             team.addPlayer(newPlayer);
         }

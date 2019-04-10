@@ -46,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISaveData.cs" />
-    <Compile Include="SaveXML.cs" />
+    <Compile Include="IDataIO.cs" />
+    <Compile Include="XMLDataIO.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
