@@ -445,7 +445,9 @@ namespace Main
         static void removePlayer(ref Team theTeam)
         {
             string readFirstName, readLastName;
-            if (theTeam != null && theTeam.Players.Count > 0)
+            int PlayerCount = theTeam.Players.Count;
+
+            if (theTeam != null && PlayerCount > 0)
             {
                 int counter = 0;
                 Console.WriteLine("Current players on this team: ");
@@ -459,7 +461,7 @@ namespace Main
                 {
                     Console.WriteLine("Enter first name: ");
                     readFirstName = Console.ReadLine();
-                    while (counter < theTeam.Players.Count && playerNameFound == false)
+                    while (counter < PlayerCount && playerNameFound == false)
                     //foreach(Team t in league.Teams)
                     {
                         if (theTeam.Players[counter].FirstName == readFirstName)
@@ -485,27 +487,7 @@ namespace Main
             else { Console.WriteLine("There are no players to remove!"); }
         }
 
-        public static int getWeek(League league)
-        {
-            int weeks = 0;
-            while (weeks <= 0 && weeks > numberWeeks)
-            {
-                Console.WriteLine("Enter the week to update the scores:");
-                {
-                    weeks = Console.Read();
-                }
-            }
-
-            return weeks;
-        }
-        public static void updateSchedule(League league)
-        {
-            int weeks = getWeek(league) - 1;
-            league.printScheduleByWeek(weeks);
-
-        }
-
-        public static void setResults(ref League league)
+        public static void SetResults(ref League league)
         {
             Team FirstTeam, SecondTeam;
             bool GameFound = false;
@@ -516,17 +498,28 @@ namespace Main
             Console.WriteLine("Away: \n");
             SecondTeam = getTeam(ref league);
 
-            foreach (Game game in league.Schedule)
+            int week = 0, games = 0;
+            while (GameFound != true &&
+                week <= league.Schedule.GetLength(0))
             {
-                if (game.Home == FirstTeam &&
-                    game.Away == SecondTeam)
+                games = 0;
+                while (GameFound != true &&
+                    games <= league.Schedule.GetLength(1))
                 {
-                    GameFound = true;
-                    Console.WriteLine("Enter score of team 1");
-                    game.setScore(FirstTeam.TeamName, int.Parse(Console.ReadLine()));
-                    Console.WriteLine("Enter score of team 2");
-                    game.setScore(SecondTeam.TeamName, int.Parse(Console.ReadLine()));
+                    if(league.Schedule[week, games].Home == FirstTeam &&
+                        league.Schedule[week, games].Away == SecondTeam)
+                    {
+                        GameFound = true;
+                        Console.WriteLine("Enter score of team 1");
+                        league.Schedule[week, games].setScore(FirstTeam.TeamName, getInt());
+                        Console.WriteLine("Enter score of team 2");
+                        league.Schedule[week, games].setScore(SecondTeam.TeamName, getInt());
+                    }
+
+                    ++games;
                 }
+
+                ++week;
             }
 
             if (GameFound == false)
@@ -618,7 +611,7 @@ namespace Main
                     League leagueToSetScore = getLeague();
                     if (leagueToSetScore != null)
                     {
-                        setResults(ref leagueToSetScore);
+                        SetResults(ref leagueToSetScore);
                     }
                     break;
                 case 11:
