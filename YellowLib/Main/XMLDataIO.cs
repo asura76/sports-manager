@@ -50,9 +50,8 @@ namespace Main
                 foreach (Team theTeam in theLeagues.Teams)
                 {
                     xmlWriter.WriteElementString("Team" + (teamCounter + 1), theTeam.TeamName);
-                    teamCounter++;
                     writePlayers(xmlWriter, teamCounter, theTeam);
-
+                    teamCounter++;
                 }
                 xmlWriter.WriteEndElement();
             }
@@ -77,7 +76,49 @@ namespace Main
 
         public void loadData(string fileName)
         {
+            int leagueCtr = 1, teamCtr = 1, playerCtr = 1; 
+            //XmlReaderSettings settings = new XmlReaderSettings();
+            //settings.IgnoreWhitespace = true;
+            //using (XmlReader textReader = XmlReader.Create(fileName, settings))
+            XmlTextReader textReader = new XmlTextReader(fileName);
+            League theLeague;
+            string leagueName = "";
+            Team currTeam;
+            while (textReader.Read())
+            {
+                XmlNodeType nType = textReader.NodeType;
+                // if node type is an element  
+                if (nType == XmlNodeType.Element)
+                {
+                    if (textReader.Name.ToString() == "LeagueName" + leagueCtr)
+                    {
+                        leagueName = textReader.ReadInnerXml();
+                    }
+                    if (textReader.Name.ToString() == "NumberToMakePlayoffs" + 
+                        leagueCtr)
+                    {
+                        int numPTeams = Int32.Parse(textReader.ReadInnerXml());
+                        Main.Program.addLeagueForTest(leagueName, numPTeams);
+                    }
+                    if (textReader.Name.ToString() == "Team" + teamCtr)
+                    {
+                        League leagueToAddTeam = Main.Program.getLeagueForTest(leagueName);
+                        currTeam = Main.Program.addAndGetTeamForTest
+                            (leagueToAddTeam, textReader.ReadInnerXml());   
+                    }
+                    if (textReader.Name.ToString() == "Team" + teamCtr +
+                        "Player" + playerCtr)
+                    {
+                        League leagueToAddPlayer = Main.Program.getLeagueForTest(leagueName);
+                        string pFullName = textReader.ReadInnerXml();
+                        // turn pFullName into first and last and then add player
+                        string fname;
+                        string lname;
+                        //Main.Program.addPlayerForTest(currTeam, fname, lname);
+                    }
+                }
 
+            }
         }
     }
 }

@@ -295,6 +295,14 @@ namespace Main
             league.addTeam(teamToAdd);
         }
 
+        // Add new team to the league passed in and return that new team
+        public static Team addAndGetTeamForTest(League league, string teamName)
+        {
+            Team teamToAdd = new Team(teamName, league);
+            league.addTeam(teamToAdd);
+
+            return teamToAdd;
+        }
 
         // Returns the team the user wants or null if that 
         // team does not exist in the league passed in 

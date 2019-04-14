@@ -222,7 +222,7 @@ namespace MainTest
             string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 + "\\fakeTest.xml";
 
-            saveDataFake.loadData("\\fakeTest.xml");
+            saveDataFake.loadData(fileLocation);
             Assert.IsTrue(Main.Program.Leagues.Count == 1);
             Assert.IsTrue(Main.Program.Leagues[0].Teams.Count == 4);
             for (int i = 0; i < 3; i++)
