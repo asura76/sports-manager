@@ -51,10 +51,37 @@ namespace Main
             return inputToInt;
         }
 
-        public static int getInt()
+        public static int getInt(Boolean fake = false, String value = "0")
         {
-            string input = Console.ReadLine();
-            int inputToInt = int.Parse(input);
+            string input;
+            int inputToInt = 0;
+            Boolean good = false;
+
+            while(!good)
+            {
+                try
+                {
+                    if(!fake)
+                    {
+                        input = Console.ReadLine();                      
+                    }
+                    else
+                    {
+                        input = value;
+                    }
+                    inputToInt = int.Parse(input);
+                    good = true;
+
+                }
+                catch (Exception ex)
+                {
+                    if (fake) {
+                        good = true;
+                        inputToInt = -999; }
+                    else { Console.WriteLine("Please enter an integer value!"); }
+                }
+            }
+            
             return inputToInt;
          
         }
@@ -75,10 +102,6 @@ namespace Main
                         break;
                     
                 }
-
-                   
-
-
             }
                 
         }

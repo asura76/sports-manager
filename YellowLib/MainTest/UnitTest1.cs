@@ -30,6 +30,24 @@ namespace MainTest
         // user prompted data, but Main does not seem to be able to be used
         // as a reference so we cannot call its functions from this test class
         [TestMethod]
+        public void getIntTest()
+        {
+            String intVal = "5";
+            String stringVal = "adsa";
+           
+            int expected = 5;
+            int failValue = -999;
+
+            int result = Main.Program.getInt(true, intVal);
+            Assert.AreEqual(expected, result);
+
+            //Pass a string ....
+            result = Main.Program.getInt(true, stringVal);
+            expected = failValue;
+            Assert.AreEqual(expected, result);
+
+        }
+        [TestMethod]
         public void addLeagueTest()
         {
             Assert.AreEqual(leagueName, Main.Program.Leagues[Main.Program.Leagues.Count - 1].LeagueName);
