@@ -34,7 +34,7 @@ namespace Main
                     xmlWriter.WriteElementString("LeagueName" + (leagueCounter + 1), theLeagues.LeagueName);
                     xmlWriter.WriteElementString("NumberToMakePlayoffs" + (leagueCounter + 1), theLeagues.NPlayoffTeams.ToString());
                     leagueCounter++;
-                    writeTeams(xmlWriter, theLeagues);                    
+                    writeTeams(xmlWriter, theLeagues);                   
                     settings.Indent = false;
                 }
                 xmlWriter.Close();
@@ -62,14 +62,15 @@ namespace Main
             int playerCounter = 0;
             if(theTeam != null && theTeam.Players.Count > 0)
             {
-                xmlWriter.WriteStartElement("Players");
+                //xmlWriter.Indentation = 0;
+                //xmlWriter.WriteStartElement("Players");
                 foreach (Player thePlayer in theTeam.Players)
                 {
                     xmlWriter.WriteElementString("Team" + (teamCounter + 1) + "Player" + (playerCounter + 1),
                     thePlayer.LastName + "," + thePlayer.FirstName);
                     playerCounter++;
                 }
-                xmlWriter.WriteEndElement();
+                //xmlWriter.WriteEndElement();
             }
           
         }
@@ -81,11 +82,12 @@ namespace Main
             //settings.IgnoreWhitespace = true;
             //using (XmlReader textReader = XmlReader.Create(fileName, settings))
             XmlTextReader textReader = new XmlTextReader(fileName);
-            League theLeague;
-            string leagueName = "";
-            Team currTeam;
+           string leagueName = "";
+         
+            Team currTeam = null;
             while (textReader.Read())
             {
+              
                 XmlNodeType nType = textReader.NodeType;
                 // if node type is an element  
                 if (nType == XmlNodeType.Element)
@@ -99,23 +101,32 @@ namespace Main
                     {
                         int numPTeams = Int32.Parse(textReader.ReadInnerXml());
                         Main.Program.addLeagueForTest(leagueName, numPTeams);
+                        ++leagueCtr;
                     }
                     if (textReader.Name.ToString() == "Team" + teamCtr)
                     {
+                       
                         League leagueToAddTeam = Main.Program.getLeagueForTest(leagueName);
                         currTeam = Main.Program.addAndGetTeamForTest
-                            (leagueToAddTeam, textReader.ReadInnerXml());   
+                            (leagueToAddTeam, textReader.ReadInnerXml());                        
+                        teamCtr++;
+                        playerCtr = 1;
                     }
-                    if (textReader.Name.ToString() == "Team" + teamCtr +
-                        "Player" + playerCtr)
+                    if (textReader.Name.ToString() == "Team" + (teamCtr - 1) +
+                      "Player" + playerCtr)
                     {
                         League leagueToAddPlayer = Main.Program.getLeagueForTest(leagueName);
                         string pFullName = textReader.ReadInnerXml();
-                        // turn pFullName into first and last and then add player
-                        string fname;
-                        string lname;
-                        //Main.Program.addPlayerForTest(currTeam, fname, lname);
+
+                        string[] splitString = pFullName.Split(',');
+                        string fname = splitString[1];
+                        string lname = splitString[0];
+                       
+                        Main.Program.addPlayerForTest(ref currTeam, fname, lname);
+                        ++playerCtr;
+                       
                     }
+                    
                 }
 
             }

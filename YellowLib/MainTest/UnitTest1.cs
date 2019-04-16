@@ -19,7 +19,7 @@ namespace MainTest
         {
             Main.Program.Leagues.Clear();
 
-            leagueName = "Test League";
+            leagueName = "Initial Test League";
             playoffTeams = 4;
 
             Main.Program.addLeagueForTest(leagueName, playoffTeams);
@@ -57,7 +57,7 @@ namespace MainTest
         [TestMethod]
         public void getLeagueTest()
         {
-            string leagueName = "Test League";
+            string leagueName = "Initial Test League";
             int playoffTeams = 4;
 
             League retLeague = Main.Program.getLeagueForTest(leagueName);
@@ -221,7 +221,8 @@ namespace MainTest
 
             string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 + "\\fakeTest.xml";
-
+            Main.Program.Leagues.Clear();
+           
             saveDataFake.loadData(fileLocation);
             Assert.IsTrue(Main.Program.Leagues.Count == 1);
             Assert.IsTrue(Main.Program.Leagues[0].Teams.Count == 4);
