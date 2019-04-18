@@ -104,8 +104,7 @@ namespace Main
                         ++leagueCtr;
                     }
                     if (textReader.Name.ToString() == "Team" + teamCtr)
-                    {
-                       
+                    {  
                         League leagueToAddTeam = Main.Program.getLeagueForTest(leagueName);
                         currTeam = Main.Program.addAndGetTeamForTest
                             (leagueToAddTeam, textReader.ReadInnerXml());                        
