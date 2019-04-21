@@ -15,6 +15,7 @@ namespace LeagueGenLib
             NPlayoffTeams = nPlayoffTeams;
             Teams = new List<Team>();
             AllPlayersInLeague = new List<Player>();
+            Rankings = new List<Team>();
         }
 
         public void addTeam(Team team)
@@ -136,7 +137,36 @@ namespace LeagueGenLib
 
         }
 
+        public void updateRankings()
+        {
+            List<Team> tempTeams = new List<Team>();
+            foreach(Team t in Teams)
+            {
+                tempTeams.Add(t);
+            }
+            int rank = 1;
+            while (Rankings.Count != Teams.Count)
+            {
+                int highestWP = 0;
+                for(int i = 0; i < tempTeams.Count; i++)
+                {
+                    if (tempTeams[i].WinPercentage > tempTeams[highestWP].WinPercentage)
+                    {
+                        highestWP = i;
+                    }
+                }
+
+                Rankings.Add(tempTeams[highestWP]);
+                Rankings[rank - 1].Ranking = rank;
+                tempTeams.RemoveAt(highestWP);
+                rank++;
+            }
+            
+        }
+
         public int NWeeks { get; private set; }
+
+        public List<Team> Rankings;
 
         public string LeagueName { private set; get; }
 

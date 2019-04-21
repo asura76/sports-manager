@@ -58,6 +58,22 @@ namespace LeagueGenLib
             return playerFound;
         }
 
+        public void updateWP()
+        {
+            if (Record[0] == 0)
+            {
+                WinPercentage = 0;
+            }
+            else
+            {
+                double nGames = Record[0] + Record[1];
+
+                WinPercentage = Record[0] / nGames;
+            }
+
+            MyLeague.updateRankings();
+        }
+
 
         public Boolean equals(Team otherTeam)
         {
@@ -74,7 +90,8 @@ namespace LeagueGenLib
 
         public int[] Record { private set; get; }
 
-        public int Ranking { private set; get; }
+        public int Ranking { set; get; }
+        public double WinPercentage { private set; get; }
 
     }
 }

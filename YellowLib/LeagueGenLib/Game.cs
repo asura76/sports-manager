@@ -56,6 +56,9 @@ namespace LeagueGenLib
             {
                 Winner = "TIE";
             }
+
+            Home.updateWP();
+            Away.updateWP();
         }
 
         public Team Home { set; get; }

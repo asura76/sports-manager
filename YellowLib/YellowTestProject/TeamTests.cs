@@ -106,5 +106,6 @@ namespace YellowTestProject
             Assert.IsFalse(myTeam.equals(bothWrong));
 
         }
+
     }
 }
