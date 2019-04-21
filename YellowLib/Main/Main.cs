@@ -46,7 +46,7 @@ namespace Main
 
                 executeSelection(inputToInt);
 
-            } while (inputToInt != 7);
+            } while (inputToInt != 12);
 
             return inputToInt;
         }
@@ -625,6 +625,8 @@ namespace Main
                 case 11:
                     save();
                     break;
+                case 12:
+                    break;
                 default:
                     Console.WriteLine("Incorrect Input");
                     break;
@@ -634,7 +636,7 @@ namespace Main
 
         static void Main(string[] args)
         {
-            int QUIT = 11;
+            int QUIT = 12;
             int selection;
             do
             {
