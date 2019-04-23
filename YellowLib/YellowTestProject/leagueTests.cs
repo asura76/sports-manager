@@ -371,9 +371,65 @@ namespace YellowTestProject
         }
 
         [TestMethod]
+        public void updateWinPercentage()
+        {
+            const int P_TEAMS = 4;
+            string leagueName = "My League";
+            League myLeague = new League(leagueName, P_TEAMS);
+
+            const string teamName1 = "team1";
+            Team team1 = new Team(teamName1, myLeague);
+            const string teamName2 = "team2";
+            Team team2 = new Team(teamName2, myLeague);
+
+            Game firstGame = new Game(team1, team2);
+            firstGame.setScore(teamName1, 40);
+            firstGame.setScore(teamName2, 50);
+
+            Game secondGame = new Game(team1, team2);
+            secondGame.setScore(teamName1, 60);
+            secondGame.setScore(teamName2, 50);
+
+            double winP = 1.0 / 2.0;
+            Assert.AreEqual(winP, team2.WinPercentage);
+            Assert.AreEqual(winP, team1.WinPercentage);
+        }
+
+        [TestMethod]
         public void setRankings()
         {
+            const int P_TEAMS = 4;
+            string leagueName = "My League";
+            League myLeague = new League(leagueName, P_TEAMS);
 
+            const string teamName1 = "team1";
+            Team team1 = new Team(teamName1, myLeague);
+            const string teamName2 = "team2";
+            Team team2 = new Team(teamName2, myLeague);
+            const string teamName3 = "team3";
+            Team team3 = new Team(teamName3, myLeague);
+            const string teamName4 = "team4";
+            Team team4 = new Team(teamName4, myLeague);
+
+            myLeague.addTeam(team1);
+            myLeague.addTeam(team2);
+            myLeague.addTeam(team3);
+            myLeague.addTeam(team4);
+
+            myLeague.generateSchedule(4, myLeague.Teams);
+            // week 1
+            myLeague.Schedule[0, 0].setScore(teamName1, 30);
+            myLeague.Schedule[0, 0].setScore(teamName4, 20);
+            myLeague.Schedule[0, 1].setScore(teamName2, 50);
+            myLeague.Schedule[0, 1].setScore(teamName3, 10);
+            // week 2
+            myLeague.Schedule[1, 0].setScore(teamName1, 20);
+            myLeague.Schedule[1, 0].setScore(teamName3, 10);
+            myLeague.Schedule[1, 1].setScore(teamName4, 60);
+            myLeague.Schedule[1, 1].setScore(teamName2, 50);
+
+            Assert.AreEqual(teamName1, myLeague.Rankings[0].TeamName);
+            Assert.AreEqual(teamName3, myLeague.Rankings[3].TeamName);
         }
         
     }
