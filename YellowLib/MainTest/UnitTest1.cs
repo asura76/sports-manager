@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Main;
 using LeagueGenLib;
-
+using System.Collections.Generic;
 
 namespace MainTest
 {
@@ -233,5 +233,28 @@ namespace MainTest
             Assert.IsTrue(Main.Program.Leagues[0].Teams[3].Players.Count == 0);
         }
 
+        [TestMethod]
+        public void loadCsvTest()
+        {
+            IDataIO loadCSV = new CSVFileIO();
+            string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                 + "\\TeamCSVTest.csv";
+            List<Player> expected = new List<Player>();
+            Player p1 = new Player("Wick", "John");
+            Player p2 = new Player("Springtein", "Bruce");
+            Player p3 = new Player("Adams", "Bryan");
+          
+            expected.Add(p1);
+            expected.Add(p2);
+            expected.Add(p3);
+
+            List<Player> actual = loadCSV.loadPlayers(fileLocation);
+
+            for(int i =0; i < expected.Count; i++)
+            {
+                Assert.AreEqual(expected[i].FirstName, actual[i].FirstName);
+                Assert.AreEqual(expected[i].LastName, actual[i].LastName);
+            }
+        }
     }
 }

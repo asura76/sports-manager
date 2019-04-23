@@ -12,5 +12,6 @@ using Main;
         void saveData(string fileName);
 
         void loadData(string fileName);
+    List<Player> loadPlayers(string fileName);
     }
 

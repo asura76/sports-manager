@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSVFileIO.cs" />
     <Compile Include="IDataIO.cs" />
     <Compile Include="XMLDataIO.cs" />
     <Compile Include="Main.cs" />
