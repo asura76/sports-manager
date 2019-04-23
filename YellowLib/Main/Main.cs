@@ -39,7 +39,7 @@ namespace Main
                 "8. Generate league schedule \n" +
                 "9. Display league schedule \n" +
                 "10. Set scores in schedule \n" +
-                "11. test xml \n" +
+                "11. Save to file \n" +
                 "12. Quit");
 
                 inputToInt = getInt();
@@ -50,7 +50,9 @@ namespace Main
 
             return inputToInt;
         }
-
+        // This function keeps the user in the loop until the enter a valid integer
+        // The fake is used to test the functionality. If fake is used, the user input
+        // will be the value of the "value" parameter
         public static int getInt(Boolean fake = false, String value = "0")
         {
             string input;
@@ -85,34 +87,19 @@ namespace Main
             return inputToInt;
          
         }
-        public void readXml(String fileName)
-        {
-            XmlReaderSettings settings = new XmlReaderSettings();
-            StreamReader sr = new StreamReader(fileName);
 
-            settings.DtdProcessing = DtdProcessing.Parse;
-            XmlReader reader = XmlReader.Create(sr);
 
-            while(reader.Read())
-            {
-                switch (reader.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        League tmp = new League(reader.Name, 4);
-                        break;
-                    
-                }
-            }
-                
-        }
-        public static void save()
+        //Saves all information in interface to file
+        public static void saveToFile()
         {
             saveInterface.saveData("test.xml");
             
         }
+
+        // Gets number of teams for playoffs
         public static int getNumberOfPlayoffTeams()
         {
-            String strTeams;
+            string strTeams;
             int nTeams = 0;
             bool valid = false;
 
@@ -155,6 +142,19 @@ namespace Main
             Leagues.Add(newLeague);
         }
 
+        // Returns league if league exists
+        public static League LeagueExists(int leagueCounter)
+        {
+            League result = null;
+            if (leagueCounter < Leagues.Count)
+            {
+                result = Leagues[leagueCounter];
+            }
+
+            return result;
+        }
+
+
         // Returns the league the user wants or null if that
         // league does not exist in the Leagues list
         public static League getLeague()
@@ -177,13 +177,10 @@ namespace Main
                     ++leagueCounter;
                 }
 
-                if (leagueCounter < Leagues.Count)
+                result = LeagueExists(leagueCounter);
+                if (result == null) 
                 {
-                    result = Leagues[leagueCounter];
-                }
-                else
-                {
-                    Console.WriteLine("The league does not exist!");
+                    Console.WriteLine("There are no leagues!");
                 }
             }
             else { Console.WriteLine("There are no leagues!"); }
@@ -214,6 +211,8 @@ namespace Main
 
             return result;
         }
+
+
         public static bool getIntValueForTest(int minValue, string inputString)
         {
             string strWeeks;
@@ -304,6 +303,14 @@ namespace Main
             return teamToAdd;
         }
 
+        public static void printTeams(League league)
+        {
+            foreach (Team team in league.Teams)
+            {
+                Console.WriteLine(team.TeamName + "\n");
+            }
+        }
+
         // Returns the team the user wants or null if that 
         // team does not exist in the league passed in 
         public static void removeTeam(ref League league)
@@ -313,18 +320,15 @@ namespace Main
             {
                 int counter = 0;
                 Console.WriteLine("Current teams: ");
-                foreach (Team team in league.Teams)
-                {
-                    Console.WriteLine(team.TeamName + "\n");
-                }
+                printTeams(league);
 
                 bool teamNameFound = false;
                 do
                 {
                     Console.WriteLine("Enter team name: ");
                     readTeam = Console.ReadLine();
-                    while (counter < league.Teams.Count && teamNameFound == false)
-                    //foreach(Team t in league.Teams)
+                    while (counter < league.Teams.Count &&
+                        teamNameFound == false)
                     {
                         if (league.Teams[counter].TeamName == readTeam)
                         {
@@ -356,7 +360,8 @@ namespace Main
 
                 bool teamNameFound = false;
 
-                while (counter < league.Teams.Count && teamNameFound == false)
+                while (counter < league.Teams.Count &&
+                    teamNameFound == false)
                 {
                     if (league.Teams[counter].TeamName == teamName)
                     {
@@ -374,10 +379,7 @@ namespace Main
         static void displayTeamsInLeague(League league)
         {
             Console.WriteLine("Teams in league: ");
-            foreach (Team team in league.Teams)
-            {
-                Console.WriteLine(team.TeamName + "\n");
-            }
+            printTeams(league);
         }
 
         // returns the team that the user enters if it exists in league
@@ -416,6 +418,14 @@ namespace Main
             return result;
         }
 
+        public static void printPlayers(Team team)
+        {
+            foreach (Player player in team.Players)
+            {
+                Console.WriteLine(player.FirstName + " " + player.LastName + "\n");
+            }
+        }
+
         // display a team's current record and roster
         static void displayRecordAndRoster(Team team)
         {
@@ -423,10 +433,8 @@ namespace Main
                 team.Record[0] + "-" + team.Record[1] + "\n");
 
             Console.WriteLine("Current roster: ");
-            foreach (Player player in team.Players)
-            {
-                Console.WriteLine(player.FirstName + " " + player.LastName + "\n");
-            }
+            
+            printPlayers(team);
         }
 
         // Add a new player to the team passed in
@@ -450,7 +458,7 @@ namespace Main
             team.addPlayer(newPlayer);
         }
 
-        static void removePlayer(ref Team theTeam)
+        public static void removePlayer(ref Team theTeam)
         {
             string readFirstName, readLastName;
             int PlayerCount = theTeam.Players.Count;
@@ -459,10 +467,7 @@ namespace Main
             {
                 int counter = 0;
                 Console.WriteLine("Current players on this team: ");
-                foreach (Player player in theTeam.Players)
-                {
-                    Console.WriteLine(player.FirstName + " " + player.LastName + "\n");
-                }
+                printPlayers(theTeam);
 
                 bool playerNameFound = false;
                 do
@@ -470,7 +475,6 @@ namespace Main
                     Console.WriteLine("Enter first name: ");
                     readFirstName = Console.ReadLine();
                     while (counter < PlayerCount && playerNameFound == false)
-                    //foreach(Team t in league.Teams)
                     {
                         if (theTeam.Players[counter].FirstName == readFirstName)
                         {
@@ -518,9 +522,9 @@ namespace Main
                         league.Schedule[week, games].Away == SecondTeam)
                     {
                         GameFound = true;
-                        Console.WriteLine("Enter score of team 1");
+                        Console.WriteLine("Enter score of Home team");
                         league.Schedule[week, games].setScore(FirstTeam.TeamName, getInt());
-                        Console.WriteLine("Enter score of team 2");
+                        Console.WriteLine("Enter score of Away team");
                         league.Schedule[week, games].setScore(SecondTeam.TeamName, getInt());
                     }
 
@@ -623,7 +627,7 @@ namespace Main
                     }
                     break;
                 case 11:
-                    save();
+                    saveToFile();
                     break;
                 case 12:
                     break;
