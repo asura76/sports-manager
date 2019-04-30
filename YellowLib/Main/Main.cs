@@ -45,14 +45,15 @@ namespace Main
                 "9. Display league schedule \n" +
                 "10. Set scores in schedule \n" +
                 "11. Save to file \n" +
-                "12. Load players from file" +
-                "13. Quit");
+                "12. Load players from file \n" +
+                "13. Print data to screen \n" +
+                "14. Quit");
 
                 inputToInt = getInt();
 
                 executeSelection(inputToInt);
 
-            } while (inputToInt != 13);
+            } while (inputToInt != 14);
 
             return inputToInt;
         }
@@ -96,15 +97,62 @@ namespace Main
 
 
         //Saves all information in interface to file
-        public static void saveToFile()
+        public static void saveToFile(League league)
         {
-            saveInterface.saveData("test.xml");
+            saveInterface.saveData(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                 + "\\" + league.LeagueName + ".xml");
             
         }
 
-        public static void loadPlayers()
+        //Load players from CSV file
+        public static List<Player> loadPlayers(League league)
         {
-            playerLoad.loadPlayers("TeamCSVTest.csv");
+            List<Player> players = playerLoad.loadPlayers(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                 + "\\" + league.LeagueName+".csv");
+
+            return players;
+        }
+
+        public static void printInfo()
+        {
+            int input = 0;
+
+
+            while (input > 4 ||
+                input < 1)
+            {
+                Console.WriteLine("Select option: \n" +
+                    "1. Print league. \n" +
+                    "2. Print teams \n" +
+                    "3. Print players \n" +
+                    "4. Quit \n");
+
+                input = getInt();
+
+
+                League league = getLeague();
+
+                switch (input)
+                {
+                    case 1:
+                        foreach (League leagueList in Leagues)
+                        {
+                            Console.WriteLine(leagueList.LeagueName);
+                        }
+                        break;
+                    case 2:
+                        printTeams(league);
+                        break;
+                    case 3:
+                        Team team = getTeam(ref league);
+                        printPlayers(team);
+                        break;
+                    case 4:
+                        break;
+                }
+            }
+
+            
         }
 
         // Gets number of teams for playoffs
@@ -638,12 +686,28 @@ namespace Main
                     }
                     break;
                 case 11:
-                    saveToFile();
+                    League leagueToSave = getLeague();
+                    if(leagueToSave != null)
+                    {
+                        saveToFile(leagueToSave);
+                    }
                     break;
                 case 12:
-                    loadPlayers();
+                    League leagueToLoad = getLeague();
+                    if (leagueToLoad != null)
+                    {
+                        List<Player> players = loadPlayers(leagueToLoad);
+                        Team team = getTeam(ref leagueToLoad);
+                        foreach(Player player in players)
+                        {
+                            team.addPlayer(player);
+                        }
+                    }
                     break;
                 case 13:
+                    printInfo();
+                    break;
+                case 14:
                     break;
                 default:
                     Console.WriteLine("Incorrect Input");
@@ -654,7 +718,7 @@ namespace Main
 
         static void Main(string[] args)
         {
-            int QUIT = 13;
+            int QUIT = 14;
             int selection;
             do
             {
