@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Author: Willertz, Ansari, Ranson
+// Description: This class stores information about the games played to include
+// the home team, away team, declares the winner of a game, and updates the team's 
+// winning percentage.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

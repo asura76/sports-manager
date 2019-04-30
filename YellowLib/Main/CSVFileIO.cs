@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Author: Willertz, Ansari, Ranson
+// Description: This class handles the loading of player names from a csv file
+// that can be loaded into a team. This class uses the IDataIO interface.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

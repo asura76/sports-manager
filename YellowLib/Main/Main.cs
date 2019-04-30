@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Author: Willertz, Ansari, Ranson
+// Description: This class is the main for the league generation program.
+// This class allows the user to create a new league, display teams in a league
+// add a team to league, remove a team from league, display team record and roster
+// add a player to team, remove a player from team, generate a league schedule
+// display the league schedule, set scores in schedule, and save the information
+// to a file.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
