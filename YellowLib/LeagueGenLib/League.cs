@@ -1,4 +1,10 @@
-﻿using System;
+﻿// Author: Willertz, Ansari, Ranson
+// Description: This class handles functions that pertain to a league.
+// This includes a list of teams, players, number of teams to make the playoffs,
+// number of weeks in a season, and the league schedule which includes
+// functionality to add or remove teams, players, etc. from the league.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

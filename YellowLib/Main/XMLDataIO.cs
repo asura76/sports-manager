@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Author: Willertz, Ansari, Ranson
+// Description: This class is used to read an write data from the league through
+// the IDataIO interface in XML format in a non-serializable format.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

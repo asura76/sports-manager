@@ -1,4 +1,10 @@
-﻿using System;
+﻿// Author: Willertz, Ansari, Ranson
+// Description: This class represents a team in a league as well as the team 
+// ranking, winning percentage, record, the team name, and the players.
+// It handles adding and removing players and updating the winning percentage.
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
