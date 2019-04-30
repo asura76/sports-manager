@@ -48,18 +48,34 @@
   <ItemGroup>
     <Compile Include="CSVFileIO.cs" />
     <Compile Include="IDataIO.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="XMLDataIO.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Resources\TeamCSVTest.csv" />
+    <None Include="Resources\TimeCard.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LeagueGenLib\LeagueGenLib.csproj">
       <Project>{5dbd9de9-a845-4bc0-93e2-9c3ef80353e2}</Project>
       <Name>LeagueGenLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\test.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

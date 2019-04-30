@@ -16,11 +16,8 @@ namespace Main
         static string leagueName;
         static int numberWeeks = 0;
         public static IDataIO saveInterface = new XMLDataIO();
-
-        public Program()
-        {
-
-        }
+        public static IDataIO playerLoad = new CSVFileIO();
+        
         public static int getSelection()
         {
             //string input;
@@ -40,24 +37,25 @@ namespace Main
                 "9. Display league schedule \n" +
                 "10. Set scores in schedule \n" +
                 "11. Save to file \n" +
-                "12. Quit");
+                "12. Load players from file" +
+                "13. Quit");
 
                 inputToInt = getInt();
 
                 executeSelection(inputToInt);
 
-            } while (inputToInt != 12);
+            } while (inputToInt != 13);
 
             return inputToInt;
         }
         // This function keeps the user in the loop until the enter a valid integer
         // The fake is used to test the functionality. If fake is used, the user input
         // will be the value of the "value" parameter
-        public static int getInt(Boolean fake = false, String value = "0")
+        public static int getInt(bool fake = false, String value = "0")
         {
             string input;
             int inputToInt = 0;
-            Boolean good = false;
+            bool good = false;
 
             while(!good)
             {
@@ -94,6 +92,11 @@ namespace Main
         {
             saveInterface.saveData("test.xml");
             
+        }
+
+        public static void loadPlayers()
+        {
+            playerLoad.loadPlayers("TeamCSVTest.csv");
         }
 
         // Gets number of teams for playoffs
@@ -630,6 +633,9 @@ namespace Main
                     saveToFile();
                     break;
                 case 12:
+                    loadPlayers();
+                    break;
+                case 13:
                     break;
                 default:
                     Console.WriteLine("Incorrect Input");
@@ -640,7 +646,7 @@ namespace Main
 
         static void Main(string[] args)
         {
-            int QUIT = 12;
+            int QUIT = 13;
             int selection;
             do
             {

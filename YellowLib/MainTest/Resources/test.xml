@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Leagues>
+    <LeagueName1>lk</LeagueName1>
+    <NumberToMakePlayoffs1>5</NumberToMakePlayoffs1>
+    <Teams>
+        <Team1>q1</Team1>
+        <Players>
+            <Team2Player1>wick,john</Team2Player1>
+            <Team2Player2>we,re</Team2Player2>
+        </Players>
+        <Team2>t78</Team2>
+    </Teams>
+    <LeagueName2>ut</LeagueName2>
+    <NumberToMakePlayoffs2>5</NumberToMakePlayoffs2>
+    <Teams>
+        <Team1>t1</Team1>
+        <Players>
+            <Team2Player1>jones,davy</Team2Player1>
+        </Players>
+    </Teams>
+</Leagues>
