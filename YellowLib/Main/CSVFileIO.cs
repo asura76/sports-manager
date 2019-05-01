@@ -1,6 +1,6 @@
 ﻿// Author: Willertz, Ansari, Ranson
 // Description: This class handles the loading of player names from a csv file
-// that can be loaded into a team. This class uses the IDataIO interface.
+// that can be loaded into a team. 
 
 using System;
 using System.Collections.Generic;
@@ -12,14 +12,8 @@ using LeagueGenLib;
 
 namespace Main
 {
-    public class CSVFileIO : IDataIO
+    public class CSVFileIO 
     {
-        // Only used to read player names.
-        public void loadData(string fileName)
-        {  
-            //Does nothing
-           
-        }
 
         // Only used to read player names.
         public List<Player> loadPlayers(string fileName)
@@ -56,10 +50,6 @@ namespace Main
 
         }
 
-        public void saveData(string fileName)
-        {
-          // does nothing
-        }
-        
+
     }
 }

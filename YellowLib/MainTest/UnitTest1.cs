@@ -236,7 +236,7 @@ namespace MainTest
         [TestMethod]
         public void loadCsvTest()
         {
-            IDataIO loadCSV = new CSVFileIO();
+            CSVFileIO loadCSV = new CSVFileIO();
             string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                  + "\\TeamCSVTest.csv";
             List<Player> expected = new List<Player>();

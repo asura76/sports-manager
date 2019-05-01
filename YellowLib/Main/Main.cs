@@ -24,7 +24,7 @@ namespace Main
         static string leagueName;
         static int numberWeeks = 0;
         public static IDataIO saveInterface = new XMLDataIO();
-        public static IDataIO playerLoad = new CSVFileIO();
+        public static CSVFileIO playerLoad = new CSVFileIO();
         
         public static int getSelection()
         {
@@ -118,37 +118,68 @@ namespace Main
             int input = 0;
 
 
-            while (input > 4 ||
-                input < 1)
+            while (input != 6)
             {
                 Console.WriteLine("Select option: \n" +
-                    "1. Print league. \n" +
+                    "1. Print leagues. \n" +
                     "2. Print teams \n" +
                     "3. Print players \n" +
-                    "4. Quit \n");
+                    "4. Print league rankings \n" +
+                    "5. Print league current playoff bracket \n" +
+                    "6. Quit \n");
 
                 input = getInt();
 
-
-                League league = getLeague();
-
-                switch (input)
+                if (input != 6)
                 {
-                    case 1:
-                        foreach (League leagueList in Leagues)
-                        {
-                            Console.WriteLine(leagueList.LeagueName);
-                        }
-                        break;
-                    case 2:
-                        printTeams(league);
-                        break;
-                    case 3:
-                        Team team = getTeam(ref league);
-                        printPlayers(team);
-                        break;
-                    case 4:
-                        break;
+                    League league = getLeague();
+
+
+
+                    switch (input)
+                    {
+                        case 1:
+                            foreach (League leagueList in Leagues)
+                            {
+                                Console.WriteLine(leagueList.LeagueName);
+                            }
+                            break;
+                        case 2:
+                            printTeams(league);
+                            break;
+                        case 3:
+                            Team team = getTeam(ref league);
+                            printPlayers(team);
+                            break;
+                        case 4:
+                            if (league.Rankings.Count <= 0)
+                            {
+                                Console.WriteLine("League rankings have not been set!");
+                            }
+                            else
+                            {
+                                for (int i = 0; i < league.Rankings.Count; i++)
+                                {
+                                    Console.WriteLine((i + 1) + ": " + league.Rankings[i].TeamName);
+                                }
+                            }
+                            break;
+                        case 5:
+                            if (league.Rankings.Count <= 0)
+                            {
+                                Console.WriteLine("League playoffs have not been set!");
+                            }
+                            else
+                            {
+                                for (int i = 0; i < league.NPlayoffTeams; i++)
+                                {
+                                    Console.WriteLine((i + 1) + ": " + league.Rankings[i].TeamName);
+                                }
+                            }
+                            break;
+                        case 6:
+                            break;
+                    }
                 }
             }
 
@@ -705,7 +736,10 @@ namespace Main
                     }
                     break;
                 case 13:
-                    printInfo();
+                    if (Leagues.Count >= 1)
+                    {
+                        printInfo();
+                    }               
                     break;
                 case 14:
                     break;
