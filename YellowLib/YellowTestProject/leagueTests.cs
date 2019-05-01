@@ -430,6 +430,9 @@ namespace YellowTestProject
 
             Assert.AreEqual(teamName1, myLeague.Rankings[0].TeamName);
             Assert.AreEqual(teamName3, myLeague.Rankings[3].TeamName);
+
+            Assert.AreEqual(1, team1.Ranking);
+            Assert.AreEqual(4, team3.Ranking);
         }
         
     }
