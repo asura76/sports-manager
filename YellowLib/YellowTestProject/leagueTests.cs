@@ -15,7 +15,7 @@ namespace YellowTestProject
         {
             const int MAX_TEAMS = 10;
             string leagueName = "My League";
-            League myLeague = new League(leagueName, MAX_TEAMS);
+            League myLeague = new League(leagueName, MAX_TEAMS); 
         }
 
         [TestMethod]
